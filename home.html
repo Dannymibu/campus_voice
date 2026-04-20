@@ -1,0 +1,136 @@
+
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="css/bootstrap.min.css">
+    <title>Home</title>
+</head>
+
+<body style="background-color:#0d6efd">
+
+
+
+    <div class="container-fluid">
+        <nav class="navbar  navbar-dark navbar-expand-sm shadow-sm">
+            <a href="#" class="corporate"><img src="cavendish.png" alt="cavendish-logo" style="width: 70px;"></a>
+            <a class="navbar-brand  mb-0 h1" style="font-size: 15px; margin-left: 20px;">cavendish Voice- Hub</a>
+
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#miNav"
+                aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse
+            " id="miNav">
+                <ul class="navbar-nav ms-auto ">
+
+
+                    <li><a class="nav-link active" aria-current="page" href="#">Home</a></li>
+                    <li><a class="nav-link" href="#">Report-Issue</a></li>
+                    <li> <a class="nav-link" href="#">Submit-concern</a></li>
+                    <li> <a class="nav-link" href="#">My-Reports</a></li>
+                    <div class="d-flex align-items-center ms-3">
+                        <img src="a-smiling-black-man-in-an-orange-hoodie-holding-books-free-png (1).png" alt="profile"
+                            class="rounded-circle profile-avatar" data-bs-toggle="offcanvas"
+                            data-bs-target="#profilePanel"
+                            style="width:40px; height:40px; object-fit:cover; cursor:pointer; border:3px solid white;">
+                    </div>
+                </ul>
+
+            </div>
+        </nav>
+    </div>
+    <section class="hero">
+
+        <div class="container-fluid">
+
+            <div class="row align-items-center">
+                <div class="col-md-6 hero-text text-center text-md-start">
+                    <h1 class="display-4 fw-semibold">Your Voice <br><span class="matters">Matters!</span></h1>
+                    <button class="btn btn-primary btn-lg">Get Started</button>
+                </div>
+                <div class="col-md-6 text-center">
+
+                    <img src="a-smiling-black-man-in-an-orange-hoodie-holding-books-free-png (1).png"
+                        class="student-image img-fluid" alt="student image">
+
+
+                </div>
+
+
+
+            </div>
+
+
+
+        </div>
+    </section>
+    <style>
+        .hero {
+            padding-top: 120px;
+            background-image: url("1772782154872.png");
+            background-size: cover;
+            background-position: center;
+            width: 100%;
+            height: 100vh;
+            display: flex;
+            align-items: center;
+
+
+
+        }
+
+        .hero-text {
+            margin-top: 50px;
+            color: white;
+            font-family: inherit;
+            text-shadow: 2px 2px 6px rgba(0, 0, 0, 0.4);
+
+        }
+
+        .matters {
+            margin-left: 5px;
+            color: white;
+        }
+
+        .student-image {
+            margin-top: 10px;
+            max-width: 75%;
+            -webkit-mask-image: linear-gradient(to bottom, black 70%, transparent);
+            mask-image: linear-gradient(to bottom, black 85%, transparent);
+        }
+
+        .offcanvas {
+            background: rgba(157, 157, 157, 0.15);
+            /* transparent */
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            color: rgb(255, 255, 255);
+        }
+    </style>
+
+    <script src="js/bootstrap.min.js"></script>
+    <div class="offcanvas offcanvas-end" tabindex="-1" id="profilePanel">
+        <div class="offcanvas-header">
+            <h5 class="offcanvas-title">Profile</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="offcanvas"></button>
+        </div>
+
+        <div class="offcanvas-body text-center">
+            <img src="a-smiling-black-man-in-an-orange-hoodie-holding-books-free-png (1).png"
+                class="rounded-circle mb-3" style="width:80px; height:80px; object-fit:cover;">
+            <h6>blank for now</h6>
+
+            <hr>
+
+            <button class="btn btn-outline-light w-100 mb-2">My Account</button>
+            <button  class="btn btn-outline-danger w-100"><a href="" class="btn btn-outline-danger w-100">Logout</a></button>
+        </div>
+    </div>
+
+</body>
+
+</html>

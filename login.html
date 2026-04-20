@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login</title>
+    <link rel="stylesheet" href="css/bootstrap.min.css">
+</head>
+
+<body style=" max-height: fit-content;  background-color: whitesmoke;">
+    <div class="img-fluid position-md- absolute  pt-5 mb-4"> <img style="max-width: 75px;" src="cavendish.png"
+            alt="cavendish logo"></div>
+    <div class="container mb-3">
+        <div class="row justify-content-center ">
+            <form id="loginForm" style="max-width: 530px; max-height: fit-content;"
+                class=" pt-3 p-5 rounded shadow bg-light">
+                <div class="text-center"><img class="img-fluiid" style="max-width: 70px;" src="voice.png"
+                        alt="megaphone"></div>
+                <h4 class="mb-5 text-center"> cavendish voice</h4>
+                <div class="mb-3">
+                    <input class="form-control" type="text" name="student-id" id="student_id" required autofocus
+                        placeholder="student-id">
+                    <label for="student_id">student id</label>
+                </div>
+
+                <div class="mb-3">
+                    <input class="form-control" type="password" name="password" id="password" required autofocus
+                        placeholder="password">
+                    <label for="email">password</label>
+                </div>
+                <div class="text-center">
+                    <button type="submit" class="btn btn-primary">LOGIN</button>
+                </div>
+                <div class="text-center mt-4">
+                    <hr>
+                    <p>New User? <a href="register.html">Register</a></p>
+                </div>
+
+            </form>
+        </div>
+
+
+    </div>
+
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
+        import { getAuth, signInWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js";
+        import { getFirestore, doc, getDoc } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
+
+        const firebaseConfig = {
+            apiKey: "AIzaSyAbaeZwRPsO8MoeQ3iWsrcY-mqvpT4xhgc",
+            authDomain: "campus-voice-3de0b.firebaseapp.com",
+            projectId: "campus-voice-3de0b",
+        };
+
+        const app = initializeApp(firebaseConfig);
+        const auth = getAuth(app);
+        const db = getFirestore(app);
+
+        const form = document.getElementById("loginForm");
+
+        form.addEventListener("submit", async (e) => {
+            e.preventDefault();
+
+            const student_id = document.getElementById("student_id").value;
+            const password = document.getElementById("password").value;
+
+            try {
+                // 🔍 Get student data from Firestore
+                const docRef = doc(db, "students",student_id);
+                const docSnap = await getDoc(docRef);
+
+                if (!docSnap.exists()) {
+                    alert("Student not found!");
+                    return;
+                }
+
+                const email = docSnap.data().email;
+
+                // 🔐 Login using email + password
+                await signInWithEmailAndPassword(auth, email, password);
+
+                alert("Login successful!");
+
+                // 🔁 Redirect
+                window.location.href = "home.html";
+
+            } catch (error) {
+                alert(error.message);
+                console.error(error);
+            }
+        });
+    </script>
+
+</body>
+
+</html>

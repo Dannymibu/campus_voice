@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Register</title>
+    <link rel="stylesheet" href="css/bootstrap.min.css">
+</head>
+
+<body style="max-height: fit-content; background-color: whitesmoke;">
+    <header class=" pt-5 mb-0" style=" display: inline-block;"> <img style="max-width: 75px;" src="cavendish.png"
+            alt="cavendish logo" class="img-fluid"></header>
+    <div class="container  mb-3">
+        <div class="row justify-content-center ">
+            <form id="studentForm" style="max-width:530px; max-height: fit-content;"
+                class=" pt-3 p-5 rounded shadow bg-light">
+                <div class="text-center"><img class="img-fluid" style="max-width: 70px;" src="voice.png"
+                        alt="megaphone"></div>
+                <h4 class="mb-5 text-center"> cavendish voice</h4>
+                <div class="mb-3">
+                    <input class="form-control" type="text" name="full_name" id="full_name" required autofocus
+                        placeholder="Daniel Mibu">
+                    <label class="form-label" for="full_name"> enter your full name</label>
+                </div>
+
+                <div class="mb-3">
+                    <input class="form-control" type="text" name="student_id" id="student_id" required
+                        placeholder="104727">
+                    <label class="form-label" for="student_id"> enter your student-id</label>
+                </div>
+
+                <div class="mb-3">
+                    <input class="form-control" type="email" name="email" id="email" required placeholder="email">
+                    <label class="form-label" for="email">email</label>
+                </div>
+                <div class="mb-3">
+                    <input class="form-control" type="password" name="password" id="password" required
+                        placeholder="password">
+                    <label class="form-label" for="password">password</label>
+                </div>
+
+                <div class="mb-3">
+                    <input class="form-control" type="password" name="confirm-password" id="confirm-password" required
+                        placeholder="confirm-password">
+                    <label class="form-label" for="confirm-password">confirm-password</label>
+                </div>
+                <div class="text-center">
+                    <button type="submit" class="btn btn-success">Register</button>
+                </div>
+                <div class=" form-text text-center mt-3">
+                    <hr>
+                    <h5>Already Have an account? <a href="login.html"> Login</a></h5>
+                </div>
+
+            </form>
+        </div>
+
+
+    </div>
+
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
+        import { getAuth, createUserWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js";
+        import { getFirestore, doc, setDoc, getDoc } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
+
+        const firebaseConfig = {
+            apiKey: "AIzaSyAbaeZwRPsO8MoeQ3iWsrcY-mqvpT4xhgc",
+            authDomain: "campus-voice-3de0b.firebaseapp.com",
+            projectId: "campus-voice-3de0b",
+        };
+
+        const app = initializeApp(firebaseConfig);
+        const auth = getAuth(app);
+        const db = getFirestore(app);
+
+        const form = document.getElementById("studentForm");
+
+        form.addEventListener("submit", async (e) => {
+            e.preventDefault();
+
+            const full_name = document.getElementById("full_name").value;
+            const student_id = document.getElementById("student_id").value;
+            const email = document.getElementById("email").value;
+            const password = document.getElementById("password").value;
+            const confirmPassword = document.getElementById("confirm-password").value;
+
+            if (password !== confirmPassword) {
+                alert("Passwords do not match!");
+                return;
+            }
+
+            try {
+                // 🔍 Check duplicate student ID
+                const docRef = doc(db, "students", student_id);
+                const docSnap = await getDoc(docRef);
+
+                if (docSnap.exists()) {
+                    alert("Student ID already exists!");
+                    return;
+                }
+
+                // 🔐 Create user
+                const userCredential = await createUserWithEmailAndPassword(auth, email, password);
+                const user = userCredential.user;
+
+                // 💾 Save student data
+                await setDoc(docRef, {
+                    full_name,
+                    student_id,
+                    email,
+                    uid: user.uid
+                });
+
+                alert("Registration successful!");
+                form.reset();
+
+            } catch (error) {
+                alert(error.message);
+                console.error(error);
+            }
+        });
+    </script>
+
+</body>
+
+</html>
