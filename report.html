@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Report Issue</title>
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="css/bootstrap.min.css">
+
+    <style>
+        body {
+            background-color: whitesmoke;
+        }
+
+        .card {
+            border-radius: 15px;
+            border: none;
+            width:auto;
+        }
+
+        .step-circle {
+            width: 35px;
+            height: 35px;
+            background: #0d6efd;
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+        }
+
+        .upload-box {
+            border: 2px dashed #ccc;
+            border-radius: 12px;
+            padding: 30px;
+            text-align: center;
+            background: #fafafa;
+            cursor: pointer;
+        }
+
+        .upload-box:hover {
+            border-color: #0d6efd;
+        }
+
+        .btn-submit {
+            background-color: #0d6efd;
+            border: none;
+            border-radius: 10px;
+            padding: 12px;
+            font-size: 18px;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="container p-5">
+
+        <!-- Header -->
+        <div class="text-center mb-5">
+            <div class="text-center mb-3"><a href="home.html"><img class="img-fluiid" style="max-width: 70px;" src="voice.png"
+                alt="megaphone"></a></div>
+            <h2 class="fw-bold">Report a New Issue</h2>
+            <p class="text-muted">
+                Your contribution helps us maintain a safer and more efficient academic environment. Provide the details
+                below to notify the campus facilities team.
+            </p>
+        </div>
+
+        <!-- Step 1 -->
+        <div class="card p-4 mb-4 shadow-sm">
+            <div class="d-flex align-items-center mb-3">
+                <div class="step-circle me-2">1</div>
+                <h5 class="mb-0">Provide Issue Details</h5>
+            </div>
+
+            <!-- Category -->
+            <div class="mb-3">
+                <label class="form-label">Issue Category</label>
+                <select class="form-select">
+                    <option selected disabled>Select a category</option>
+                    <option>Electrical</option>
+                    <option>Water Leakage</option>
+                    <option>Broken Furniture</option>
+                    <option>Cleaning</option>
+                </select>
+            </div>
+
+            <!-- Location -->
+            <div class="mb-3">
+                <label class="form-label">Precise Location</label>
+                <input type="text" class="form-control" placeholder="e.g. SziIense Wing, 2nd Floor, Room 204">
+            </div>
+
+            <!-- Description -->
+            <div>
+                <label class="form-label">Detailed Description</label>
+                <textarea class="form-control" rows="4"
+                    placeholder="Please describe the issue in detail. Include any specific observations that might help the maintenance team."></textarea>
+            </div>
+        </div>
+
+        <!-- Step 2 -->
+        <div class="card p-4 mb-4 shadow-sm">
+            <div class="d-flex align-items-center mb-3">
+                <div class="step-circle me-2">2</div>
+                <h5 class="mb-0">Add Visual Evidence (Optional)</h5>
+            </div>
+
+            <p class="text-muted">Upload images that help show the issue more clearly.</p>
+
+            <!-- Upload Box -->
+            <div class="upload-box mb-3">
+                <p class="mb-1">📤 Drag images here or <span class="text-primary">browse</span></p>
+                <small class="text-muted">PNG, JPG up to 10MB</small>
+                <input type="file" class="form-control mt-3" multiple>
+            </div>
+        </div>
+
+        <!-- Submit Button -->
+        <div class="d-grid">
+            <button type="submit" class="btn btn-primary text-white">
+                Submit Report
+            </button>
+        </div>
+
+        <p class="text-center text-muted mt-3" style="font-size: 13px;">
+            By submitting, you agree to our community reporting guidelines.
+        </p>
+
+    </div>
+
+    <!-- Bootstrap JS -->
+    <script src="js/bootstrap.bundle.min.js"></script>
+
+</body>
+
+</html>
