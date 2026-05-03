@@ -146,6 +146,27 @@
             border-radius: 10px;
             /* optional soft corners */
         }
+
+        .footer {
+            background: #0d3b66;
+            color: white;
+        }
+
+        .footer a {
+            text-decoration: none;
+        }
+
+        .footer-link {
+            color: #cfd8dc;
+            display: block;
+            margin-bottom: 8px;
+            transition: 0.3s;
+        }
+
+        .footer-link:hover {
+            color: #ffffff;
+            padding-left: 5px;
+        }
     </style>
 </head>
 
@@ -300,14 +321,14 @@
                 <div class="col-md-4">
                     <div class="testimonial-card h-100">
                         <img src="danny.jpg" class="testimonial-img img-fluid mb-3" alt="student">
-
+                        <h6 class="fw-bold mb-0">Sarah Mwila</h6>
+                        <small class="text-muted">Computer Science Student</small>
                         <p>
                             “Campus Voice helped us report broken desks in our lecture room
                             and they were fixed within days.”
                         </p>
 
-                        <h6 class="fw-bold mb-0">Sarah Mwila</h6>
-                        <small class="text-muted">Computer Science Student</small>
+
                     </div>
                 </div>
 
@@ -315,14 +336,14 @@
                 <div class="col-md-4">
                     <div class="testimonial-card h-100">
                         <img src="danny.jpg" class="testimonial-img img-fluid mb-3" alt="student">
-
+                        <h6 class="fw-bold mb-0">Daniel Phiri</h6>
+                        <small class="text-muted">Business Administration</small>
                         <p>
                             “The platform makes it easy to raise campus concerns
                             without complicated procedures.”
                         </p>
 
-                        <h6 class="fw-bold mb-0">Daniel Phiri</h6>
-                        <small class="text-muted">Business Administration</small>
+
                     </div>
                 </div>
 
@@ -331,13 +352,13 @@
                     <div class="testimonial-card h-100">
                         <img src="danny.jpg" class="testimonial-img img-fluid mb-3" alt="student">
 
+                        <h6 class="fw-bold mb-0">Mercy Banda</h6>
+                        <small class="text-muted">Engineering Student</small>
                         <p>
                             “I love how students can directly contribute to improving
                             the campus environment.”
                         </p>
 
-                        <h6 class="fw-bold mb-0">Mercy Banda</h6>
-                        <small class="text-muted">Engineering Student</small>
                     </div>
                 </div>
 
@@ -367,6 +388,48 @@
             </div>
         </div>
     </section>
+    <footer class="footer mt-5">
+        <div class="container py-5">
+
+            <div class="row g-4">
+
+                <!-- Brand -->
+                <div class="col-md-4">
+                    <h5 class="fw-bold">Campus Voice</h5>
+                    <p class="text-white">
+                        A platform that empowers students to report campus issues
+                        and help improve their environment.
+                    </p>
+                </div>
+
+                <!-- Quick Links -->
+                <div class="col-md-4">
+                    <h5 class="fw-bold">Quick Links</h5>
+                    <ul class="list-unstyled">
+                        <li><a href="#" class="footer-link">Home</a></li>
+                        <li><a href="#" class="footer-link">Report Issue</a></li>
+                        <li><a href="#" class="footer-link">How it Works</a></li>
+                        <li><a href="#" class="footer-link">Contact</a></li>
+                    </ul>
+                </div>
+
+                <!-- Contact -->
+                <div class="col-md-4">
+                    <h5 class="fw-bold">Contact</h5>
+                    <p class="text-white mb-1">Email: support@campusvoice.com</p>
+                    <p class="text-white">Phone: +260 000 000 000</p>
+                </div>
+
+            </div>
+
+            <hr>
+
+            <div class="text-center text-white small">
+                © 2026 Campus Voice. All rights reserved.
+            </div>
+
+        </div>
+    </footer>
 
     <script src="/js/bootstrap.min.js"></script>
 
