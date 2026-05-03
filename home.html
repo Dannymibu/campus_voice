@@ -98,12 +98,14 @@
         /* LOWER SECTION */
         .info-section {
             margin-top: 60px;
+
+
         }
 
         .info-box {
             background: #0d3b66;
             color: white;
-            padding: 50px;
+            padding: 20px;
             height: 100%;
             display: flex;
             flex-direction: column;
@@ -114,6 +116,26 @@
             .student-img {
                 display: none;
             }
+        }
+
+        .stats-section {
+            background: #f8f9fa;
+        }
+
+        .stat-box {
+            background: white;
+            padding: 30px 20px;
+            border-radius: 15px;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.08);
+            transition: 0.3s;
+        }
+
+        .stat-box:hover {
+            transform: translateY(-5px);
+        }
+
+        .stat-box h1 {
+            font-size: 3rem;
         }
     </style>
 </head>
@@ -200,6 +222,55 @@
                 </div>
 
             </div>
+        </div>
+    </section>
+
+    <section class="stats-section py-5">
+        <div class="container">
+
+            <div class="text-center mb-5">
+                <h2 class="fw-bold">Live Campus Statistics</h2>
+                <p class="text-muted">
+                    See how students are helping improve campus life
+                </p>
+            </div>
+
+            <div class="row text-center g-4">
+
+                <!-- Stat 1 -->
+                <div class="col-md-3 col-6">
+                    <div class="stat-box">
+                        <h1 class="fw-bold text-info">1,240+</h1>
+                        <p>Reports Submitted</p>
+                    </div>
+                </div>
+
+                <!-- Stat 2 -->
+                <div class="col-md-3 col-6">
+                    <div class="stat-box">
+                        <h1 class="fw-bold text-info">980</h1>
+                        <p>Issues Resolved</p>
+                    </div>
+                </div>
+
+                <!-- Stat 3 -->
+                <div class="col-md-3 col-6">
+                    <div class="stat-box">
+                        <h1 class="fw-bold text-info">3,500+</h1>
+                        <p>Active Students</p>
+                    </div>
+                </div>
+
+                <!-- Stat 4 -->
+                <div class="col-md-3 col-6">
+                    <div class="stat-box">
+                        <h1 class="fw-bold text-info">24/7</h1>
+                        <p>Campus Monitoring</p>
+                    </div>
+                </div>
+
+            </div>
+
         </div>
     </section>
 
