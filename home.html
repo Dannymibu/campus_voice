@@ -84,7 +84,8 @@
         }
 
         .custom-card:hover {
-            transform: translateY(-5px);
+            transform: translateY(-10px);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.2);
         }
 
         .card-icon {
@@ -96,11 +97,7 @@
 
 
         /* LOWER SECTION */
-        .info-section {
-            margin-top: 60px;
 
-
-        }
 
         .info-box {
             background: #0d3b66;
@@ -110,6 +107,16 @@
             display: flex;
             flex-direction: column;
             justify-content: center;
+
+
+        }
+
+        .info-box h2 {
+            font-size: 3.5rem;
+        }
+
+        .info-box p {
+            font-size: 1.4rem;
         }
 
         @media (max-width: 980px) {
@@ -167,10 +174,22 @@
             color: #ffffff;
             padding-left: 5px;
         }
+
+        /* FADE IN ANIMATION */
+        .fade-section {
+            opacity: 0;
+            transform: translateY(40px);
+            transition: all 1.3s ease;
+        }
+
+        .fade-section.show {
+            opacity: 1;
+            transform: translateY(0);
+        }
     </style>
 </head>
 
-<body>
+<body style="background-color: whitesmoke;">
     <!-- NAVBAR -->
     <nav class="navbar navbar-expand-lg navbar-dark position-absolute w-100" style="z-index: 5;">
         <div class="container">
@@ -255,11 +274,60 @@
         </div>
     </section>
 
+    <section class="py-5 bg-light">
+        <div class="container">
+
+            <!-- Heading -->
+            <div class="text-center mb-5">
+                <h2 class="fw-bold text-info">How Campus Voice Works</h2>
+                <p class="text-muted">Report issues in just 3 simple steps</p>
+            </div>
+
+            <div class="row text-center g-4">
+
+                <!-- Step 1 -->
+                <div class="col-md-4">
+                    <div class="p-4 bg-white shadow rounded-4 h-100">
+
+                        <h5 class="fw-bold mt-4">1. Report an Issue</h5>
+                        <p class="text-muted">
+                            Submit any campus problem such as broken furniture,
+                            safety concerns, or maintenance issues.
+                        </p>
+                    </div>
+                </div>
+
+                <!-- Step 2 -->
+                <div class="col-md-4">
+                    <div class="p-4 bg-white shadow rounded-4 h-100">
+                        <h5 class="fw-bold mt-4">2. Administration Review</h5>
+                        <p class="text-muted">
+                            The campus team reviews your report and prioritizes
+                            it based on urgency and importance.
+                        </p>
+                    </div>
+                </div>
+
+                <!-- Step 3 -->
+                <div class="col-md-4">
+                    <div class="p-4 bg-white shadow rounded-4 h-100">
+                        <h5 class="fw-bold mt-4 ">3. Issue Gets Resolved</h5>
+                        <p class="text-muted">
+                            Maintenance teams fix the issue and updates are shared
+                            back to students.
+                        </p>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
     <section class="stats-section py-5">
         <div class="container">
 
             <div class="text-center mb-5">
-                <h2 class="fw-bold">Live Campus Statistics</h2>
+                <h2 class="fw-bold text-info">Live Campus Statistics</h2>
                 <p class="text-muted">
                     See how students are helping improve campus life
                 </p>
@@ -309,7 +377,7 @@
 
             <!-- Heading -->
             <div class="text-center mb-5">
-                <h2 class="fw-bold">What Students Say</h2>
+                <h2 class="fw-bold text-info">What Students Say</h2>
                 <p class="text-muted">
                     Hear from students using Campus Voice
                 </p>
@@ -335,7 +403,7 @@
                 <!-- Testimonial 2 -->
                 <div class="col-md-4">
                     <div class="testimonial-card h-100">
-                        <img src="danny.jpg" class="testimonial-img img-fluid mb-3" alt="student">
+                        <img src="daniel.png" class="testimonial-img img-fluid mb-3" alt="student">
                         <h6 class="fw-bold mb-0">Daniel Phiri</h6>
                         <small class="text-muted">Business Administration</small>
                         <p>
@@ -350,7 +418,7 @@
                 <!-- Testimonial 3 -->
                 <div class="col-md-4">
                     <div class="testimonial-card h-100">
-                        <img src="danny.jpg" class="testimonial-img img-fluid mb-3" alt="student">
+                        <img src="mercy banda.png" class="testimonial-img img-fluid mb-3" alt="student">
 
                         <h6 class="fw-bold mb-0">Mercy Banda</h6>
                         <small class="text-muted">Engineering Student</small>
@@ -367,18 +435,18 @@
     </section>
 
     <!-- LOWER SECTION -->
-    <section class="info-section">
+    <section class="info-section fade-section">
         <div class="container">
             <div class="row g-0 shadow">
 
                 <div class="col-md-6">
-                    <img src="privacy.jpg" class="img-fluid w-100" alt="">
+                    <img src="privacy.jpg" class="img-fluid w-100 " alt="">
                 </div>
 
                 <div class="col-md-6">
-                    <div class="info-box">
+                    <div class="info-box pt-3">
                         <h2><b>Shaping A Better<br>Campus Together</b></h2>
-                        <p class="mt-3">
+                        <p class="mt-4">
                             Every report you submit helps build a safer, smarter,
                             and more responsive environment
                         </p>
@@ -398,7 +466,7 @@
                     <h5 class="fw-bold">Campus Voice</h5>
                     <p class="text-white">
                         A platform that empowers students to report campus issues
-                        and help improve their environment.
+                        and help improve their Learning environment.
                     </p>
                 </div>
 
@@ -430,6 +498,24 @@
 
         </div>
     </footer>
+    <script>
+        const fadeSections = document.querySelectorAll('.fade-section');
+
+        function revealSections() {
+            fadeSections.forEach(section => {
+                const sectionTop = section.getBoundingClientRect().top;
+                const windowHeight = window.innerHeight;
+
+                if (sectionTop < windowHeight - 100) {
+                    section.classList.add('show');
+                }
+            });
+        }
+
+        window.addEventListener('scroll', revealSections);
+
+        revealSections();
+    </script>
 
     <script src="/js/bootstrap.min.js"></script>
 
