@@ -186,6 +186,14 @@
             opacity: 1;
             transform: translateY(0);
         }
+
+        .offcanvas {
+            background: rgba(157, 157, 157, 0.15);
+            /* transparent */
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            color: rgb(255, 255, 255);
+        }
     </style>
 </head>
 
@@ -215,10 +223,29 @@
 
                 <!-- Profile Image -->
                 <img src="a-smiling-black-man-in-an-orange-hoodie-holding-books-free-png (1).png" width="40"
-                    class="rounded-circle" style="border: 3px solid white;" alt="profile">
+                    class="rounded-circle" data-bs-toggle="offcanvas" data-bs-target="#profilePanel"
+                    style="border: 3px solid white;" alt="profile">
 
             </div>
     </nav>
+    <!--off-canvas-->
+    <div class="offcanvas offcanvas-end" tabindex="-1" id="profilePanel">
+        <div class="offcanvas-header">
+            <h5 class="offcanvas-title">Profile</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="offcanvas"></button>
+        </div>
+
+        <div class="offcanvas-body text-center">
+            <img src="a-smiling-black-man-in-an-orange-hoodie-holding-books-free-png (1).png"
+                class="rounded-circle mb-3" style="width:80px; height:80px; object-fit:cover; border: 3px solid white;">
+            <h6>Daniel Mibu</h6>
+
+            <hr>
+
+            <button class="btn btn-outline-light w-100 mb-2">My Account</button>
+            <button class="btn btn-outline-danger w-100" id="logoutBtn">Logout</button>
+        </div>
+    </div>
 
     <!-- HERO -->
     <section class="hero">
@@ -256,7 +283,8 @@
 
                 <div class="col-md-4">
                     <div class="custom-card">
-                        <div class="card-icon"><img src="spanner.png" class="img-fluid w-50" alt="img-icon"></div>
+                        <div class="card-icon"><img src="spanner.png" class="img-fluid" style="width: 43%;"
+                                alt="img-icon"></div>
                         <h5><b>Maintenance reports</b></h5>
                         <p class="small">Report electrical faults, water leaks, and other maintenance issues.</p>
                     </div>
@@ -388,7 +416,7 @@
                 <!-- Testimonial 1 -->
                 <div class="col-md-4">
                     <div class="testimonial-card h-100">
-                        <img src="danny.jpg" class="testimonial-img img-fluid mb-3" alt="student">
+                        <img src="serah mwila.jpg" class="testimonial-img img-fluid mb-3" alt="student">
                         <h6 class="fw-bold mb-0">Sarah Mwila</h6>
                         <small class="text-muted">Computer Science Student</small>
                         <p>
@@ -515,6 +543,24 @@
         window.addEventListener('scroll', revealSections);
 
         revealSections();
+
+        //logout
+        import { getAuth, signOut } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
+
+        const auth = getAuth();
+
+        document.getElementById("logoutBtn").addEventListener("click", () => {
+
+            signOut(auth)
+                .then(() => {
+                    // Redirect after logout
+                    window.location.href = "login.html";
+                })
+                .catch((error) => {
+                    console.log(error);
+                });
+
+        });
     </script>
 
     <script src="/js/bootstrap.min.js"></script>
