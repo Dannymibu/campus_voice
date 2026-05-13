@@ -527,6 +527,8 @@
         </div>
     </footer>
     <script type="module">
+
+        // Fade animation
         const fadeSections = document.querySelectorAll('.fade-section');
 
         function revealSections() {
@@ -541,26 +543,62 @@
         }
 
         window.addEventListener('scroll', revealSections);
-
         revealSections();
 
-        //logout
-        import { getAuth, signOut } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
 
-        const auth = getAuth();
+        // FIREBASE IMPORTS
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
 
+        import {
+            getAuth,
+            signOut
+        } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
+
+
+        // YOUR FIREBASE CONFIG
+        const firebaseConfig = {
+
+            apiKey: "AIzaSyAbaeZwRPsO8MoeQ3iWsrcY-mqvpT4xhgc",
+
+            authDomain: "campus-voice-3de0b.firebaseapp.com",
+
+            projectId: "campus-voice-3de0b",
+
+            storageBucket: "YOUR_PROJECT.appspot.com",
+
+            messagingSenderId: "788646502212",
+
+            appId: "1:788646502212:web:d0aea180d70c0f59538111"
+
+        };
+
+
+        // INITIALIZE FIREBASE
+        const app = initializeApp(firebaseConfig);
+
+        // INITIALIZE AUTH
+        const auth = getAuth(app);
+
+
+        // LOGOUT
         document.getElementById("logoutBtn").addEventListener("click", () => {
 
             signOut(auth)
                 .then(() => {
-                    // Redirect after logout
+
+                    console.log("Logged out");
+
                     window.location.href = "login.html";
+
                 })
                 .catch((error) => {
+
                     console.log(error);
+
                 });
 
         });
+
     </script>
 
     <script src="js/bootstrap.min.js"></script>
