@@ -194,6 +194,22 @@
             -webkit-backdrop-filter: blur(12px);
             color: rgb(255, 255, 255);
         }
+
+        .profile-avatar {
+            width: 35px;
+            height: 35px;
+            border-radius: 50%;
+            background: #2bbcd3;
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 12px;
+            font-weight: bold;
+            margin: auto;
+            border: 3px solid white;
+            text-transform: uppercase;
+        }
     </style>
 </head>
 
@@ -222,9 +238,12 @@
                 </a>
 
                 <!-- Profile Image -->
-                <img src="a-smiling-black-man-in-an-orange-hoodie-holding-books-free-png (1).png" width="40"
-                    class="rounded-circle" data-bs-toggle="offcanvas" data-bs-target="#profilePanel"
-                    style="border: 3px solid white;" alt="profile">
+
+
+                <div id="profileAvatar" class="profile-avatar mb-1 rounded rounded-circle" data-bs-toggle="offcanvas"
+                    data-bs-target="#profilePanel">
+                    DM
+                </div>
 
             </div>
     </nav>
@@ -236,8 +255,12 @@
         </div>
 
         <div class="offcanvas-body text-center">
-            <img src="a-smiling-black-man-in-an-orange-hoodie-holding-books-free-png (1).png"
-                class="rounded-circle mb-3" style="width:80px; height:80px; object-fit:cover; border: 3px solid white;">
+
+            <div style="  width:70px;
+            height:70px;" id="navAvater" class="profile-avatar mb-1 rounded rounded-circle" data-bs-toggle="offcanvas"
+                data-bs-target="#profilePanel">
+                <span style="font-size: 20px;"> DM</span>
+            </div>
             <h6>Daniel Mibu</h6>
 
             <hr>
@@ -449,7 +472,7 @@
                         <img src="mercy banda.png" class="testimonial-img img-fluid mb-3" alt="student">
 
                         <h6 class="fw-bold mb-0">Mercy Banda</h6>
-                        <small class="text-muted">Engineering Student</small>
+                        <small class="text-muted">project management Student</small>
                         <p>
                             “I love how students can directly contribute to improving
                             the campus environment.”
@@ -551,9 +574,15 @@
 
         import {
             getAuth,
-            signOut
+            signOut,
+            onAuthStateChanged
         } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
 
+        import {
+            getFirestore,
+            doc,
+            getDoc
+        } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
 
         // YOUR FIREBASE CONFIG
         const firebaseConfig = {
@@ -578,6 +607,48 @@
 
         // INITIALIZE AUTH
         const auth = getAuth(app);
+        const db = getFirestore(app);
+        // CHECK LOGGED IN USER
+        onAuthStateChanged(auth, async (user) => {
+
+            if (user) {
+
+                // GET USER DOCUMENT FROM FIRESTORE
+                const docRef = doc(db, "students", user.uid);
+
+                const docSnap = await getDoc(docRef);
+
+                if (docSnap.exists()) {
+
+                    const userData = docSnap.data();
+
+                    // GET FULL NAME
+                    const fullName = userData.full_name;
+
+                    // SPLIT NAME INTO PARTS
+                    const nameParts = fullName.split(" ");
+
+                    // GET INITIALS
+                    const initials =
+                        nameParts[0].charAt(0) +
+                        (nameParts[1] ? nameParts[1].charAt(0) : "");
+                    // SHOW INITIALS IN NAVBAR AVATAR
+                    document.getElementById("profileAvatar").innerHTML = initials;
+
+                    // SHOW INITIALS IN OFFCANVAS AVATAR
+                    document.getElementById("navAvater").innerHTML =
+                        `<span style="font-size:20px;">${initials}</span>`;
+
+                }
+
+            } else {
+
+                // IF USER NOT LOGGED IN
+                window.location.href = "login.html";
+
+            }
+
+        });
 
 
         // LOGOUT
