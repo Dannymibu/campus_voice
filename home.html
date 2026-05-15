@@ -581,7 +581,11 @@
         import {
             getFirestore,
             doc,
-            getDoc
+            getDoc,
+            collection,
+            query,
+            where,
+            getDocs
         } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
 
         // YOUR FIREBASE CONFIG
@@ -613,43 +617,39 @@
 
             if (user) {
 
-                // GET USER DOCUMENT FROM FIRESTORE
-                const docRef = doc(db, "students", user.uid);
+                const q = query(
+                    collection(db, "students"),
+                    where("uid", "==", user.uid)
+                );
 
-                const docSnap = await getDoc(docRef);
+                const querySnapshot = await getDocs(q);
 
-                if (docSnap.exists()) {
+                if (!querySnapshot.empty) {
 
-                    const userData = docSnap.data();
+                    const userData = querySnapshot.docs[0].data();
 
-                    // GET FULL NAME
                     const fullName = userData.full_name;
 
-                    // SPLIT NAME INTO PARTS
                     const nameParts = fullName.split(" ");
 
-                    // GET INITIALS
                     const initials =
                         nameParts[0].charAt(0) +
                         (nameParts[1] ? nameParts[1].charAt(0) : "");
-                    // SHOW INITIALS IN NAVBAR AVATAR
+
                     document.getElementById("profileAvatar").innerHTML = initials;
 
-                    // SHOW INITIALS IN OFFCANVAS AVATAR
                     document.getElementById("navAvater").innerHTML =
                         `<span style="font-size:20px;">${initials}</span>`;
 
+                } else {
+                    console.log("No student found for this user");
                 }
 
             } else {
-
-                // IF USER NOT LOGGED IN
                 window.location.href = "login.html";
-
             }
 
         });
-
 
         // LOGOUT
         document.getElementById("logoutBtn").addEventListener("click", () => {
