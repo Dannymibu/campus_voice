@@ -261,7 +261,7 @@
                 data-bs-target="#profilePanel">
                 <span style="font-size: 20px;"> DM</span>
             </div>
-            <h6>Daniel Mibu</h6>
+            <h6 id="profileName">Daniel Mibu</h6>
 
             <hr>
 
@@ -629,6 +629,8 @@
                     const userData = querySnapshot.docs[0].data();
 
                     const fullName = userData.full_name;
+
+                    document.getElementById("profileName").textContent = fullName;
 
                     const nameParts = fullName.split(" ");
 
