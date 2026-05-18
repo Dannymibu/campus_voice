@@ -101,7 +101,7 @@
 
                         <h2 class="fw-light">My Account</h2>
 
-                        <button class="btn-close"></button>
+                        <button class="btn-close" onclick="window.location.href='home.html'"></button>
 
                     </div>
 
@@ -151,7 +151,7 @@
                                 </div>
 
                                 <div class="col-8">
-                                    <input type="text" class="form-control" id="nameInput" value="Liza Doe">
+                                    <input type="text" class="form-control" id="nameInput" value="">
                                 </div>
 
                                 <div class="col-1">
@@ -170,7 +170,7 @@
                                 </div>
 
                                 <div class="col-8">
-                                    <input type="email" id="emailInput" class="form-control" value="support@gmail.com">
+                                    <input type="email" id="emailInput" class="form-control" value="">
                                 </div>
 
                                 <div class="col-1">
@@ -189,7 +189,7 @@
                                 </div>
 
                                 <div class="col-8">
-                                    <input id="phoneInput" type="text" class="form-control" value="+260 97 000 0000">
+                                    <input id="phoneInput" type="text" class="form-control" value="">
                                 </div>
 
                                 <div class="col-1">
@@ -208,7 +208,7 @@
                                 </div>
 
                                 <div class="col-8">
-                                    <input id="courseInput" type="text" class="form-control" value="Computer Science">
+                                    <input id="courseInput" type="text" class="form-control" value="">
                                 </div>
 
                                 <div class="col-1">
@@ -227,7 +227,7 @@
                                 </div>
 
                                 <div class="col-8">
-                                    <input id="passwordInput" type="password" class="form-control" value="123456789">
+                                    <input id="passwordInput" type="password" class="form-control" value="">
                                 </div>
 
                                 <div class="col-1">
@@ -246,7 +246,7 @@
                                 </div>
 
                                 <div class="col-8">
-                                    <input type="password" class="form-control" value="123456789">
+                                    <input type="password" class="form-control">
                                 </div>
 
                                 <div class="col-1">
@@ -275,6 +275,150 @@
         </div>
 
     </div>
+    <!-- FIREBASE SCRIPT -->
+    <script type="module">
+
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
+
+        import {
+            getAuth,
+            onAuthStateChanged
+        } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
+
+        import {
+            getFirestore,
+            collection,
+            query,
+            where,
+            getDocs,
+            doc,
+            updateDoc
+        } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
+        // FIREBASE CONFIG
+        const firebaseConfig = {
+
+            apiKey: "AIzaSyAbaeZwRPsO8MoeQ3iWsrcY-mqvpT4xhgc",
+
+            authDomain: "campus-voice-3de0b.firebaseapp.com",
+
+            projectId: "campus-voice-3de0b",
+
+            storageBucket: "campus-voice-3de0b.firebasestorage.app",
+
+            messagingSenderId: "788646502212",
+
+            appId: "1:788646502212:web:d0aea180d70c0f59538111"
+
+        };
+
+
+        // INITIALIZE
+        const app = initializeApp(firebaseConfig);
+
+        const auth = getAuth(app);
+
+        const db = getFirestore(app);
+
+
+        // CHECK LOGGED IN USER
+        onAuthStateChanged(auth, async (user) => {
+
+            if (user) {
+
+                // FIND USER IN FIRESTORE
+                const q = query(
+                    collection(db, "students"),
+                    where("uid", "==", user.uid)
+                );
+
+                const querySnapshot = await getDocs(q);
+
+                if (!querySnapshot.empty) {
+
+                    const userData = querySnapshot.docs[0].data();
+
+                    // INSERT DATA INTO INPUTS
+                    document.getElementById("nameInput").value =
+                        userData.full_name || "";
+
+                    document.getElementById("emailInput").value =
+                        userData.email || "";
+
+                    document.getElementById("phoneInput").value =
+                        userData.phone || "";
+
+                    document.getElementById("courseInput").value =
+                        userData.course || "";
+
+                }
+
+            } else {
+
+                // REDIRECT IF NOT LOGGED IN
+                window.location.href = "login.html";
+
+            }
+
+        });
+
+        // SAVE PROFILE CHANGES
+        document.getElementById("saveBtn").addEventListener("click", async () => {
+
+            const user = auth.currentUser;
+
+            if (!user) return;
+
+            try {
+
+                // FIND CURRENT USER DOCUMENT
+                const q = query(
+                    collection(db, "students"),
+                    where("uid", "==", user.uid)
+                );
+
+                const querySnapshot = await getDocs(q);
+
+                if (!querySnapshot.empty) {
+
+                    const docId = querySnapshot.docs[0].id;
+
+                    // GET INPUT VALUES
+                    const updatedName =
+                        document.getElementById("nameInput").value;
+
+                    const updatedEmail =
+                        document.getElementById("emailInput").value;
+
+                    const updatedPhone =
+                        document.getElementById("phoneInput").value;
+
+                    const updatedCourse =
+                        document.getElementById("courseInput").value;
+
+                    // UPDATE FIRESTORE
+                    await updateDoc(doc(db, "students", docId), {
+
+                        full_name: updatedName,
+                        email: updatedEmail,
+                        phone: updatedPhone,
+                        course: updatedCourse
+
+                    });
+
+                    alert("Profile updated successfully!");
+
+                }
+
+            } catch (error) {
+
+                console.log(error);
+                alert("Failed to update profile");
+
+            }
+
+        });
+
+    </script>
 
     <script src="js/bootstrap.min.js"></script>
 
