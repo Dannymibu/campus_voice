@@ -340,17 +340,17 @@ Campus Voice - Admin Dashboard
 
         import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
 
-        import {
-            getFirestore,
-            collection,
-            onSnapshot,
-            doc,
-            updateDoc,
-            addDoc,
-            serverTimestamp,
-            query,
-            orderBy
-        }
+       import {
+                getFirestore,
+                collection,
+                onSnapshot,
+                doc,
+                updateDoc,
+                serverTimestamp,
+                addDoc,
+                query,
+                orderBy
+            }
             from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
 
         // =====================================================
@@ -359,19 +359,19 @@ Campus Voice - Admin Dashboard
 
         const firebaseConfig = {
 
-            apiKey: "YOUR_API_KEY",
+    apiKey: "AIzaSyAbaeZwRPsO8MoeQ3iWsrcY-mqvpT4xhgc",
 
-            authDomain: "YOUR_AUTH_DOMAIN",
+    authDomain: "campus-voice-3de0b.firebaseapp.com",
 
-            projectId: "YOUR_PROJECT_ID",
+    projectId: "campus-voice-3de0b",
 
-            storageBucket: "YOUR_STORAGE_BUCKET",
+    storageBucket: "campus-voice-3de0b.firebasestorage.app",
 
-            messagingSenderId: "YOUR_MESSAGING_ID",
+    messagingSenderId: "788646502212",
 
-            appId: "YOUR_APP_ID"
+    appId: "1:788646502212:web:d0aea180d70c0f59538111"
 
-        };
+};
 
         // =====================================================
         // INITIALIZE
@@ -380,6 +380,8 @@ Campus Voice - Admin Dashboard
         const app = initializeApp(firebaseConfig);
 
         const db = getFirestore(app);
+
+        
 
         // =====================================================
         // REFERENCES
@@ -513,74 +515,78 @@ Campus Voice - Admin Dashboard
                 `;
             });
 
-            totalReports.textContent = total;
+                        totalReports.textContent = total;
 
-            anonymousReports.textContent = anonymous;
+                        anonymousReports.textContent = anonymous;
 
-            pendingReports.textContent = pending;
+                        pendingReports.textContent = pending;
 
-            resolvedReports.textContent = resolved;
+                        resolvedReports.textContent = resolved;
 
-        });
+                    });
 
-        // =====================================================
-        // UPDATE STATUS
-        // =====================================================
+                    // =====================================================
+                    // UPDATE STATUS
+                    // =====================================================
 
-        window.updateStatus = async (
-            reportId,
-            status,
-            studentId
-        ) => {
+                    window.updateStatus = async (
+                        reportId,
+                        status,
+                        studentId
+                    ) => {
 
-            try {
+                        try {
 
-                // UPDATE REPORT STATUS
-                await updateDoc(
-                    doc(db, "reports", reportId),
-                    {
-                        status: status,
-                        updatedAt: serverTimestamp()
-                    }
-                );
+                            // UPDATE REPORT STATUS
+                            await updateDoc(
+                                doc(db, "reports", reportId),
+                                {
+                                    status: status,
+                                    updatedAt: serverTimestamp()
+                                }
+                            );
 
-                // CREATE NOTIFICATION
-                let message = "";
+                            // CREATE NOTIFICATION
+                            let message = "";
 
-                if (status === "review") {
-                    message = "Your report is currently under review.";
-                }
+                            if (status === "review") {
+                                message = "Your report is currently under review.";
+                            }
 
-                if (status === "pending") {
-                    message = "Your report is pending resolution.";
-                }
+                            if (status === "pending") {
+                                message = "Your report is pending resolution.";
+                            }
 
-                if (status === "resolved") {
-                    message = "Your issue has been resolved successfully.";
-                }
+                            if (status === "resolved") {
+                                message = "Your issue has been resolved successfully.";
+                            }
 
-                await addDoc(
-                    collection(db, "notifications"),
-                    {
-                        studentId: studentId,
-                        message: message,
-                        status: status,
-                        read: false,
-                        createdAt: serverTimestamp()
-                    }
-                );
+                            await addDoc(
+                                collection(db, "notifications"),
+                                {
+                                    studentId: studentId,
+                                    message: message,
+                                    status: status,
+                                    read: false,
+                                    createdAt: serverTimestamp()
+                                }
+                            );
 
-                alert("Status updated successfully!");
+                            alert("Status updated successfully!");
 
-            } catch (error) {
+                        } catch (error) {
 
-                console.log(error);
+                            console.log(error);
 
-                alert(error.message);
+                            alert(error.message);
 
-            }
+                        }
 
-        };
+                    };
+
+                    
+
+    
 
     </script>
 
