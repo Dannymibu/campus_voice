@@ -9,117 +9,113 @@
 
     <title>Register | Campus Voice</title>
 
-    <link
-    rel="stylesheet"
-    href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css">
 
     <style>
-
         body {
 
             min-height: 100vh;
 
             background:
-                linear-gradient(rgba(13,59,102,0.88), rgba(13,59,102,0.88)),
+                linear-gradient(rgba(13, 59, 102, 0.88), rgba(13, 59, 102, 0.88)),
                 url("talk-to-us.png");
 
             background-size: cover;
             background-position: center;
 
-            display:flex;
-            justify-content:center;
-            align-items:center;
+            display: flex;
+            justify-content: center;
+            align-items: center;
 
-            padding:20px;
+            padding: 20px;
 
-            font-family:'Segoe UI',sans-serif;
+            font-family: 'Segoe UI', sans-serif;
         }
 
         .auth-card {
 
-            width:100%;
-            max-width:1100px;
+            width: 100%;
+            max-width: 1100px;
 
-            overflow:hidden;
+            overflow: hidden;
 
-            border-radius:30px;
+            border-radius: 30px;
 
-            background:rgba(255,255,255,0.12);
+            background: rgba(255, 255, 255, 0.12);
 
-            backdrop-filter:blur(18px);
+            backdrop-filter: blur(18px);
 
-            box-shadow:0 15px 40px rgba(0,0,0,0.25);
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.25);
         }
 
         .left-side {
 
-            padding:60px;
-            color:white;
+            padding: 60px;
+            color: white;
         }
 
         .left-side h1 {
 
-            font-size:3.2rem;
-            font-weight:bold;
-            line-height:1.1;
+            font-size: 3.2rem;
+            font-weight: bold;
+            line-height: 1.1;
         }
 
         .left-side p {
 
-            margin-top:20px;
-            color:rgba(255,255,255,0.85);
+            margin-top: 20px;
+            color: rgba(255, 255, 255, 0.85);
         }
 
         .info-box {
 
-            background:rgba(255,255,255,0.14);
+            background: rgba(255, 255, 255, 0.14);
 
-            padding:18px;
+            padding: 18px;
 
-            border-radius:18px;
+            border-radius: 18px;
 
-            margin-top:20px;
+            margin-top: 20px;
         }
 
         .right-side {
 
-            background:white;
-            padding:50px;
+            background: white;
+            padding: 50px;
         }
 
         .form-control {
 
-            border-radius:14px;
-            padding:14px;
+            border-radius: 14px;
+            padding: 14px;
         }
 
         .form-control:focus {
 
-            box-shadow:none;
-            border-color:#2bbcd3;
+            box-shadow: none;
+            border-color: #2bbcd3;
         }
 
         .main-btn {
 
-            background:#2bbcd3;
-            border:none;
+            background: #2bbcd3;
+            border: none;
 
-            padding:14px;
+            padding: 14px;
 
-            width:100%;
+            width: 100%;
 
-            border-radius:14px;
+            border-radius: 14px;
 
-            color:white;
+            color: white;
 
-            font-weight:600;
+            font-weight: 600;
         }
 
         .main-btn:hover {
 
-            background:#24a6bb;
+            background: #24a6bb;
         }
-
     </style>
 
 </head>
@@ -170,48 +166,24 @@
                     <form id="registerForm">
 
                         <div class="mb-3">
-                            <input
-                            type="text"
-                            id="full_name"
-                            class="form-control"
-                            placeholder="Full Name"
-                            required>
+                            <input type="text" id="full_name" class="form-control" placeholder="Full Name" required>
                         </div>
 
                         <div class="mb-3">
-                            <input
-                            type="text"
-                            id="student_id"
-                            class="form-control"
-                            placeholder="Student ID"
-                            required>
+                            <input type="text" id="student_id" class="form-control" placeholder="Student ID" required>
                         </div>
 
                         <div class="mb-3">
-                            <input
-                            type="email"
-                            id="email"
-                            class="form-control"
-                            placeholder="Email Address"
-                            required>
+                            <input type="email" id="email" class="form-control" placeholder="Email Address" required>
                         </div>
 
                         <div class="mb-3">
-                            <input
-                            type="password"
-                            id="password"
-                            class="form-control"
-                            placeholder="Password"
-                            required>
+                            <input type="password" id="password" class="form-control" placeholder="Password" required>
                         </div>
 
                         <div class="mb-4">
-                            <input
-                            type="password"
-                            id="confirm-password"
-                            class="form-control"
-                            placeholder="Confirm Password"
-                            required>
+                            <input type="password" id="confirm-password" class="form-control"
+                                placeholder="Confirm Password" required>
                         </div>
 
                         <button type="submit" class="main-btn">
@@ -241,20 +213,20 @@
     <script type="module">
 
         import { initializeApp }
-        from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
+            from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
 
         import {
             getAuth,
             createUserWithEmailAndPassword
         }
-        from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
+            from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
 
         import {
             getFirestore,
             doc,
             setDoc
         }
-        from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
+            from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
 
         const firebaseConfig = {
 
@@ -276,7 +248,8 @@
 
         const auth = getAuth(app);
 
-        const db = getFirestore(app);
+        const db = getFirestore
+            (app);
 
         const registerForm =
             document.getElementById("registerForm");
@@ -300,7 +273,7 @@
             const confirmPassword =
                 document.getElementById("confirm-password").value;
 
-            if(password !== confirmPassword){
+            if (password !== confirmPassword) {
 
                 alert("Passwords do not match");
 
@@ -338,7 +311,7 @@
 
                 window.location.href = "login.html";
 
-            } catch(error){
+            } catch (error) {
 
                 console.log(error);
 

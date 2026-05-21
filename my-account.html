@@ -343,6 +343,12 @@
     </div>
     <!-- FIREBASE SCRIPT -->
     <script type="module">
+        import {
+            getStorage,
+            ref,
+            uploadBytes,
+            getDownloadURL
+        } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-storage.js";
 
         import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
 
@@ -384,6 +390,7 @@
         const auth = getAuth(app);
 
         const db = getFirestore(app);
+        const storage = getStorage(app);
 
 
         // CHECK LOGGED IN USER
@@ -404,6 +411,7 @@
                     const userData = querySnapshot.docs[0].data();
 
                     // INSERT DATA INTO INPUTS
+                    // INSERT DATA INTO INPUTS
                     document.getElementById("nameInput").value =
                         userData.full_name || "";
 
@@ -416,6 +424,29 @@
                     document.getElementById("courseInput").value =
                         userData.course || "";
 
+
+                    // CREATE INITIALS AVATAR
+                    const fullName = userData.full_name || "";
+
+                    const nameParts = fullName.split(" ");
+
+                    const initials =
+                        nameParts[0].charAt(0) +
+                        (nameParts[1] ? nameParts[1].charAt(0) : "");
+
+                    if (userData.profile_image) {
+
+                        document.getElementById("profileAvatar")
+                            .innerHTML =
+                            `<img src="${userData.profile_image}">`;
+
+                    } else {
+
+                        document.getElementById("profileAvatar")
+                            .innerHTML =
+                            `<span>${initials}</span>`;
+
+                    }
                 }
 
             } else {
@@ -429,7 +460,134 @@
 
         // SAVE PROFILE CHANGES
         document.getElementById("saveBtn").addEventListener("click", async () => {
+            // OPEN FILE PICKER
+            document.getElementById("changePhotoBtn")
+                .addEventListener("click", () => {
 
+                    document.getElementById("profileInput").click();
+
+                });
+
+            // SAVE PROFILE CHANGES
+            document.getElementById("saveBtn").addEventListener("click", async () => {
+
+                const user = auth.currentUser;
+
+                if (!user) return;
+
+                try {
+
+                    const q = query(
+                        collection(db, "students"),
+                        where("uid", "==", user.uid)
+                    );
+
+                    const querySnapshot = await getDocs(q);
+
+                    if (!querySnapshot.empty) {
+
+                        const docId = querySnapshot.docs[0].id;
+
+                        const updatedName =
+                            document.getElementById("nameInput").value;
+
+                        const updatedEmail =
+                            document.getElementById("emailInput").value;
+
+                        const updatedPhone =
+                            document.getElementById("phoneInput").value;
+
+                        const updatedCourse =
+                            document.getElementById("courseInput").value;
+
+                        await updateDoc(doc(db, "students", docId), {
+
+                            full_name: updatedName,
+                            email: updatedEmail,
+                            phone: updatedPhone,
+                            course: updatedCourse
+
+                        });
+
+                        alert("Profile updated successfully!");
+                    }
+
+                } catch (error) {
+
+                    console.log(error);
+                    alert("Failed to update profile");
+
+                }
+
+            });
+
+
+            // OPEN FILE PICKER
+            document.getElementById("changePhotoBtn")
+                .addEventListener("click", () => {
+
+                    document.getElementById("profileInput").click();
+
+                });
+
+
+            // UPLOAD PROFILE IMAGE
+            document.getElementById("profileInput")
+                .addEventListener("change", async (e) => {
+
+                    const file = e.target.files[0];
+
+                    if (!file) return;
+
+                    const user = auth.currentUser;
+
+                    if (!user) return;
+
+                    try {
+
+                        const storageRef = ref(
+                            storage,
+                            `profile_pictures/${user.uid}`
+                        );
+
+                        await uploadBytes(storageRef, file);
+
+                        const downloadURL =
+                            await getDownloadURL(storageRef);
+
+                        const q = query(
+                            collection(db, "students"),
+                            where("uid", "==", user.uid)
+                        );
+
+                        const querySnapshot = await getDocs(q);
+
+                        if (!querySnapshot.empty) {
+
+                            const docId = querySnapshot.docs[0].id;
+
+                            await updateDoc(
+                                doc(db, "students", docId),
+                                {
+                                    profile_image: downloadURL
+                                }
+                            );
+
+                            document.getElementById("profileAvatar")
+                                .innerHTML =
+                                `<img src="${downloadURL}">`;
+                        }
+
+                        alert("Profile picture updated!");
+
+                    } catch (error) {
+
+                        console.log(error);
+                        alert("Failed to upload image");
+
+                    }
+
+                });
             const user = auth.currentUser;
 
             if (!user) return;

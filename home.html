@@ -47,7 +47,7 @@
         .btn-main {
             background-color: #2bbcd3;
             border: none;
-            padding: 12px 25px;
+            padding: 5px 10px;
             font-weight: 600;
         }
 
@@ -210,45 +210,126 @@
             border: 3px solid white;
             text-transform: uppercase;
         }
+
+        @media (max-width: 576px) {
+
+            .btn-main {
+                padding: 8px 14px;
+                font-size: 14px;
+            }
+
+            .profile-avatar {
+                width: 32px;
+                height: 32px;
+                font-size: 11px;
+            }
+
+        }
+
+        /* MOBILE RESPONSIVENESS */
+        @media (max-width: 768px) {
+
+            /* Get Started button */
+            .btn-main {
+                padding: 7px 14px;
+                font-size: 13px;
+            }
+
+            /* Notification icon */
+            .notification-icon {
+                width: 22px;
+                height: 22px;
+            }
+
+            /* Profile avatar */
+            .profile-avatar {
+                width: 30px;
+                height: 30px;
+                font-size: 10px;
+                border-width: 2px;
+            }
+
+            /* Campus Voice logo text */
+            .navbar-brand span {
+                font-size: 10px;
+            }
+
+            /* Logo image */
+            .navbar-brand img {
+                width: 24px;
+            }
+        }
+
+
+        /* EXTRA SMALL DEVICES */
+        @media (max-width: 480px) {
+
+            .btn-main {
+                padding: 6px 10px;
+                font-size: 11px;
+            }
+
+            .notification-icon {
+                width: 18px;
+                height: 18px;
+            }
+
+            .profile-avatar {
+                width: 26px;
+                height: 26px;
+                font-size: 9px;
+            }
+
+            .navbar-brand img {
+                width: 20px;
+            }
+
+            .navbar-brand span {
+                font-size: 8px;
+            }
+
+        }
     </style>
 </head>
 
 <body style="background-color: whitesmoke;">
     <!-- NAVBAR -->
-    <nav class="navbar navbar-expand-lg navbar-dark position-absolute w-100" style="z-index: 5;">
-        <div class="container">
+    <!-- NAVBAR -->
+    <nav class="navbar navbar-expand-lg navbar-dark position-absolute w-100 py-3" style="z-index: 5;">
 
-            <!-- Logo + Brand -->
-            <a class="navbar-brand text-center position-absolute top-0 start-0 m-2" href="#">
+        <div class="container d-flex justify-content-between align-items-center pe-4">
+
+            <!-- Logo -->
+            <a class="navbar-brand text-center m-0" href="#">
                 <img src="w-megaphone.png" width="30" class="d-block mx-auto">
-                <span class="fw-bold d-block small mt-1">CAMPUS VOICE</span>
+
+                <span class="fw-bold d-block small mt-1">
+                    CAMPUS VOICE
+                </span>
             </a>
-            <!-- Right side -->
-            <div class="d-flex align-items-center gap-3 mt-3 ms-auto">
 
-                <!-- Get Started Button -->
-                <a href="reports.html"
-                 class="btn btn-main mt-3">
+            <!-- Right Side -->
+            <div class="d-flex align-items-center gap-3">
 
-                     Get started
-
+                <!-- Get Started -->
+                <a href="reports.html" class="btn btn-main">
+                    Get Started
                 </a>
 
-                <!-- Notification Icon -->
-                <!-- Notification Icon (as link) -->
+                <!-- Notification -->
                 <a href="#notificationsPanel" class="d-flex align-items-center">
-                    <img src="notification.png" alt="notifications" width="24" height="24">
+                    <img src="notification.png" alt="notifications" width="26" height="26" class="notification-icon">
                 </a>
 
-                <!-- Profile Image -->
-
-
-                <div id="profileAvatar" class="profile-avatar mb-1 rounded rounded-circle" data-bs-toggle="offcanvas"
+                <!-- Profile -->
+                <div id="profileAvatar" class="profile-avatar" data-bs-toggle="offcanvas"
                     data-bs-target="#profilePanel">
-
                 </div>
 
             </div>
+
+        </div>
+
     </nav>
     <!--off-canvas-->
     <div class="offcanvas offcanvas-end" tabindex="-1" id="profilePanel">
@@ -262,9 +343,9 @@
             <div style="  width:70px;
             height:70px;" id="navAvater" class="profile-avatar mb-1 rounded rounded-circle" data-bs-toggle="offcanvas"
                 data-bs-target="#profilePanel">
-                <span style="font-size: 20px;"> DM</span>
+                <span style="font-size: 20px;"> </span>
             </div>
-            <h6 id="profileName">Daniel Mibu</h6>
+            <h6 id="profileName"></h6>
 
             <hr>
 
