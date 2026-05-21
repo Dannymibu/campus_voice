@@ -318,15 +318,17 @@
 
                 const user = userCredential.user;
 
-                await setDoc(doc(db, "students", student_id), {
+                await setDoc(doc(db, "users", student_id), {
 
                     uid: user.uid,
 
                     full_name: full_name,
 
-                    student_id: student_id,
+                    school_id: student_id,
 
                     email: email,
+
+                    role:"student",
 
                     createdAt: new Date()
 

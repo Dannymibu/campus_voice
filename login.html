@@ -187,88 +187,134 @@
 
     <script type="module">
 
-        import { initializeApp }
-        from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
+import { initializeApp }
+from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
 
-        import {
-            getAuth,
-            signInWithEmailAndPassword
+import {
+    getAuth,
+    signInWithEmailAndPassword
+}
+from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
+
+import {
+    getFirestore,
+    doc,
+    getDoc
+}
+from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
+
+const firebaseConfig = {
+
+    apiKey: "AIzaSyAbaeZwRPsO8MoeQ3iWsrcY-mqvpT4xhgc",
+
+    authDomain: "campus-voice-3de0b.firebaseapp.com",
+
+    projectId: "campus-voice-3de0b",
+
+    storageBucket: "campus-voice-3de0b.firebasestorage.app",
+
+    messagingSenderId: "788646502212",
+
+    appId: "1:788646502212:web:d0aea180d70c0f59538111"
+
+};
+
+const app = initializeApp(firebaseConfig);
+
+const auth = getAuth(app);
+
+const db = getFirestore(app);
+
+document.getElementById("loginForm")
+.addEventListener("submit", async (e) => {
+
+    e.preventDefault();
+
+    const school_id =
+        document.getElementById("student_id").value;
+
+    const password =
+        document.getElementById("password").value;
+
+    try {
+
+        // =====================================
+        // CHECK ADMINS COLLECTION FIRST
+        // =====================================
+
+        const adminRef =
+            doc(db, "admins", school_id);
+
+        const adminSnap =
+            await getDoc(adminRef);
+
+        // =====================================
+        // ADMIN FOUND
+        // =====================================
+
+        if(adminSnap.exists()){
+
+            const adminData =
+                adminSnap.data();
+
+            await signInWithEmailAndPassword(
+
+                auth,
+
+                adminData.email,
+
+                password
+
+            );
+
+            window.location.href =
+                "dashboard.html";
+
+            return;
         }
-        from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
 
-        import {
-            getFirestore,
-            doc,
-            getDoc
+        // =====================================
+        // CHECK STUDENTS COLLECTION
+        // =====================================
+
+        const studentRef =
+            doc(db, "students", school_id);
+
+        const studentSnap =
+            await getDoc(studentRef);
+
+        if(!studentSnap.exists()){
+
+            alert("User not found");
+
+            return;
         }
-        from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
 
-        const firebaseConfig = {
+        const studentData =
+            studentSnap.data();
 
-            apiKey: "AIzaSyAbaeZwRPsO8MoeQ3iWsrcY-mqvpT4xhgc",
+        await signInWithEmailAndPassword(
 
-            authDomain: "campus-voice-3de0b.firebaseapp.com",
+            auth,
 
-            projectId: "campus-voice-3de0b",
+            studentData.email,
 
-            storageBucket: "campus-voice-3de0b.firebasestorage.app",
+            password
 
-            messagingSenderId: "788646502212",
+        );
 
-            appId: "1:788646502212:web:d0aea180d70c0f59538111"
+        window.location.href =
+            "home.html";
 
-        };
+    } catch(error){
 
-        const app = initializeApp(firebaseConfig);
+        console.log(error);
 
-        const auth = getAuth(app);
+        alert(error.message);
+    }
 
-        const db = getFirestore(app);
+});        
 
-        document.getElementById("loginForm")
-        .addEventListener("submit", async (e) => {
-
-            e.preventDefault();
-
-            const student_id =
-                document.getElementById("student_id").value;
-
-            const password =
-                document.getElementById("password").value;
-
-            try {
-
-                const docRef =
-                    doc(db, "students", student_id);
-
-                const docSnap =
-                    await getDoc(docRef);
-
-                if(!docSnap.exists()){
-
-                    alert("Student not found");
-
-                    return;
-                }
-
-                const email = docSnap.data().email;
-
-                await signInWithEmailAndPassword(
-                    auth,
-                    email,
-                    password
-                );
-
-                window.location.href = "home.html";
-
-            } catch(error){
-
-                console.log(error);
-
-                alert(error.message);
-            }
-
-        });
 
     </script>
 
