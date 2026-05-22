@@ -217,6 +217,12 @@ Campus Voice - Admin Dashboard
                 align-items: flex-start;
             }
         }
+
+        .btn-orange {
+    background: #fd7e14;
+    color: white;
+}
+
     </style>
 </head>
 
@@ -279,7 +285,11 @@ Campus Voice - Admin Dashboard
             <!-- TOPBAR -->
             <div class="topbar">
 
-                <input type="text" placeholder="Search reports..." class="search-box">
+                <input
+                    type="text"
+                    placeholder="Search reports..."
+                    class="search-box"
+                    id="searchInput">
 
                 <div class="profile-box">
                     <i class="fa-solid fa-bell fa-xl text-secondary"></i>
@@ -319,9 +329,31 @@ Campus Voice - Admin Dashboard
             <!-- REPORTS -->
             <div class="reports-container">
 
-                <div class="d-flex justify-content-between align-items-center mb-4">
-                    <h3>Student Reports</h3>
-                </div>
+                <div class="d-flex justify-content-between align-items-center mb-4 flex-wrap gap-3">
+
+    <h3>Student Reports</h3>
+
+            <div class="d-flex gap-2 flex-wrap">
+
+                <button class="btn btn-info filter-btn" data-status="all">
+                    All
+                </button>
+
+                <button class="btn btn-warning filter-btn" data-status="review">
+                    Review
+                </button>
+
+                <button class="btn btn-orange filter-btn" data-status="pending">
+                    Pending
+                </button>
+
+                <button class="btn btn-success filter-btn" data-status="resolved">
+                    Resolved
+                </button>
+
+            </div>
+
+            </div>
 
                 <div id="reportsWrapper"></div>
 
@@ -331,8 +363,87 @@ Campus Voice - Admin Dashboard
 
     </div>
 
+    <!-- TOAST CONTAINER -->
+
+<div class="toast-container position-fixed top-0 end-0 p-3">
+
+    <div
+        id="liveToast"
+        class="toast align-items-center text-bg-success border-0"
+        role="alert">
+
+        <div class="d-flex">
+
+            <div class="toast-body" id="toastMessage">
+
+                Success
+
+            </div>
+
+            <button
+                type="button"
+                class="btn-close btn-close-white me-2 m-auto"
+                data-bs-dismiss="toast">
+            </button>
+
+        </div>
+
+    </div>
+
+</div>
+
     <!-- FIREBASE + JS -->
     <script type="module">
+
+
+// =====================================================
+// TOAST FUNCTION
+// =====================================================
+
+function showToast(message, type = "success") {
+
+    const toastElement =
+        document.getElementById("liveToast");
+
+    const toastMessage =
+        document.getElementById("toastMessage");
+
+    toastMessage.textContent = message;
+
+    // RESET COLORS
+
+    toastElement.classList.remove(
+        "text-bg-success",
+        "text-bg-danger",
+        "text-bg-warning"
+    );
+
+    // APPLY TYPE
+
+    if (type === "success") {
+
+        toastElement.classList.add("text-bg-success");
+
+    }
+
+    if (type === "error") {
+
+        toastElement.classList.add("text-bg-danger");
+
+    }
+
+    if (type === "warning") {
+
+        toastElement.classList.add("text-bg-warning");
+
+    }
+
+    const toast =
+        new bootstrap.Toast(toastElement);
+
+    toast.show();
+
+}
 
         // =====================================================
         // FIREBASE IMPORTS
@@ -389,6 +500,15 @@ Campus Voice - Admin Dashboard
 
         const reportsWrapper = document.getElementById("reportsWrapper");
 
+            const searchInput = document.getElementById("searchInput");
+
+        const filterButtons =
+            document.querySelectorAll(".filter-btn");
+
+        let allReports = [];
+
+        let currentFilter = "all";
+
         const totalReports = document.getElementById("totalReports");
 
         const anonymousReports = document.getElementById("anonymousReports");
@@ -408,123 +528,219 @@ Campus Voice - Admin Dashboard
 
         onSnapshot(reportsQuery, (snapshot) => {
 
-            reportsWrapper.innerHTML = "";
+    allReports = [];
 
-            let total = 0;
+    let total = 0;
 
-            let anonymous = 0;
+    let anonymous = 0;
 
-            let pending = 0;
+    let pending = 0;
 
-            let resolved = 0;
+    let resolved = 0;
 
-            snapshot.forEach((docSnap) => {
+    snapshot.forEach((docSnap) => {
 
-                total++;
+        total++;
 
-                const report = docSnap.data();
+        const report = docSnap.data();
 
-                const reportId = docSnap.id;
+        report.id = docSnap.id;
 
-                if (report.anonymous === true) {
-                    anonymous++;
-                }
+        allReports.push(report);
 
-                if (report.status === "pending") {
-                    pending++;
-                }
+        if (report.anonymous === true) {
+            anonymous++;
+        }
 
-                if (report.status === "resolved") {
-                    resolved++;
-                }
+        if (report.status === "pending") {
+            pending++;
+        }
 
-                let badgeClass = "";
+        if (report.status === "resolved") {
+            resolved++;
+        }
 
-                if (report.status === "review") {
-                    badgeClass = "review";
-                }
+    });
 
-                if (report.status === "pending") {
-                    badgeClass = "pending";
-                }
+    totalReports.textContent = total;
 
-                if (report.status === "resolved") {
-                    badgeClass = "resolved";
-                }
+    anonymousReports.textContent = anonymous;
 
-                reportsWrapper.innerHTML += `
+    pendingReports.textContent = pending;
 
-                    <div class="report-card">
+    resolvedReports.textContent = resolved;
 
-                        <div class="d-flex justify-content-between flex-wrap gap-3">
+    renderReports();
 
-                            <div>
+});
 
-                                <h5>${report.title}</h5>
 
-                                <p class="mb-1">
-                                    <strong>Student:</strong>
-                                    ${report.anonymous ? "Anonymous" : report.studentName}
-                                </p>
+                function renderReports() {
 
-                                <p class="mb-1">
-                                    <strong>Category:</strong>
-                                    ${report.category}
-                                </p>
+    reportsWrapper.innerHTML = "";
 
-                                <p class="mb-0">
-                                    ${report.description}
-                                </p>
+    const searchValue =
+        searchInput.value.toLowerCase();
 
-                            </div>
+    let filteredReports = allReports.filter((report) => {
 
-                            <div class="text-end">
+        const matchesFilter =
 
-                                <span class="status-badge ${badgeClass}">
-                                    ${report.status.toUpperCase()}
-                                </span>
+            currentFilter === "all" ||
 
-                                <div class="mt-3">
+            report.status === currentFilter;
 
-                                    <button
-                                        class="action-btn btn-review"
-                                        onclick="updateStatus('${reportId}','review','${report.studentId}')">
-                                        Review
-                                    </button>
+        const matchesSearch =
 
-                                    <button
-                                        class="action-btn btn-pending"
-                                        onclick="updateStatus('${reportId}','pending','${report.studentId}')">
-                                        Pending
-                                    </button>
+            report.title.toLowerCase().includes(searchValue) ||
 
-                                    <button
-                                        class="action-btn btn-resolved"
-                                        onclick="updateStatus('${reportId}','resolved','${report.studentId}')">
-                                        Resolve
-                                    </button>
+            report.category.toLowerCase().includes(searchValue) ||
 
-                                </div>
+            (
+                report.studentName &&
+                report.studentName.toLowerCase().includes(searchValue)
+            );
 
-                            </div>
+        return matchesFilter && matchesSearch;
+
+    });
+
+    if (filteredReports.length === 0) {
+
+        reportsWrapper.innerHTML = `
+
+            <div class="text-center p-5">
+
+                <h5 class="text-muted">
+                    No reports found
+                </h5>
+
+            </div>
+
+        `;
+
+        return;
+    }
+
+    filteredReports.forEach((report) => {
+
+        let badgeClass = "";
+
+        if (report.status === "review") {
+            badgeClass = "review";
+        }
+
+        if (report.status === "pending") {
+            badgeClass = "pending";
+        }
+
+        if (report.status === "resolved") {
+            badgeClass = "resolved";
+        }
+
+        reportsWrapper.innerHTML += `
+
+            <div class="report-card">
+
+                <div class="d-flex justify-content-between flex-wrap gap-3">
+
+                    <div>
+
+                        <h5>${report.title}</h5>
+
+                        <p class="mb-1">
+                            <strong>Student:</strong>
+                            ${
+                                report.anonymous
+                                ? "Anonymous"
+                                : report.studentName
+                            }
+                        </p>
+
+                        <p class="mb-1">
+                            <strong>Category:</strong>
+                            ${report.category}
+                        </p>
+
+                        <p class="mb-0">
+                            ${report.description}
+                        </p>
+
+                    </div>
+
+                    <div class="text-end">
+
+                        <span class="status-badge ${badgeClass}">
+                            ${report.status.toUpperCase()}
+                        </span>
+
+                        <div class="mt-3">
+
+                            <button
+                                class="action-btn btn-review"
+                                onclick="updateStatus(
+                                    '${report.id}',
+                                    'review',
+                                    '${report.studentId}'
+                                )">
+                                Review
+                            </button>
+
+                            <button
+                                class="action-btn btn-pending"
+                                onclick="updateStatus(
+                                    '${report.id}',
+                                    'pending',
+                                    '${report.studentId}'
+                                )">
+                                Pending
+                            </button>
+
+                            <button
+                                class="action-btn btn-resolved"
+                                onclick="updateStatus(
+                                    '${report.id}',
+                                    'resolved',
+                                    '${report.studentId}'
+                                )">
+                                Resolve
+                            </button>
 
                         </div>
 
                     </div>
 
-                `;
-            });
+                </div>
 
-                        totalReports.textContent = total;
+            </div>
 
-                        anonymousReports.textContent = anonymous;
+        `;
+    });
 
-                        pendingReports.textContent = pending;
+}
 
-                        resolvedReports.textContent = resolved;
 
-                    });
 
+ filterButtons.forEach((button) => {
+
+    button.addEventListener("click", () => {
+
+        currentFilter =
+            button.dataset.status;
+
+        renderReports();
+
+    });
+
+});
+
+
+
+searchInput.addEventListener("input", () => {
+
+    renderReports();
+
+});
                     // =====================================================
                     // UPDATE STATUS
                     // =====================================================
@@ -573,13 +789,15 @@ Campus Voice - Admin Dashboard
                                 }
                             );
 
-                            alert("Status updated successfully!");
+                            showToast(
+                                    "Report status updated successfully!"
+                                );
 
                         } catch (error) {
 
                             console.log(error);
 
-                            alert(error.message);
+                            showToast(error.message, "error");
 
                         }
 
