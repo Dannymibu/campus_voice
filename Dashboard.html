@@ -564,7 +564,8 @@ Campus Voice - Admin Dashboard
                             await addDoc(
                                 collection(db, "notifications"),
                                 {
-                                    studentId: studentId,
+                                    //studentId: studentId,
+                                   studentId: report.userUid,
                                     message: message,
                                     status: status,
                                     read: false,
