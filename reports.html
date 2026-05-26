@@ -636,7 +636,7 @@ Campus Voice - Submit Concern Page
 
                 await addDoc(collection(db, "reports"), {
 
-                    studentId: currentUser.uid,
+                    studentId: user.uid,
 
                     studentName:
                         studentData.full_name || "",

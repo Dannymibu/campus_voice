@@ -210,25 +210,141 @@
                     </ul>
 
 
-                    <!-- NOTIFICATIONS SECTION -->
+                    <!-- PROFILE SECTION -->
+<div id="profileSection">
 
-                    <div id="notificationsSection" class="mb-5">
+    <!-- RIGHT -->
+    <div class="col-md-8">
 
-                        <div class="d-flex justify-content-between align-items-center mb-3">
+        <!-- NAME -->
+        <div class="row align-items-center mb-4">
 
-                            <h4 class="fw-bold">
-                                Notifications
-                            </h4>
+            <div class="col-3">
+                <span class="label-text">
+                    NAME
+                </span>
+            </div>
 
-                        </div>
+            <div class="col-8">
+                <input type="text" class="form-control" id="nameInput" value="">
+            </div>
 
-                        <div id="notificationsWrapper"></div>
+            <div class="col-1">
+                <i class="bi bi-check-lg check-icon"></i>
+            </div>
 
-                    </div>
-                         
+        </div>
 
-                    <!-- CONTENT -->
-                    <div id="reportsSection" style="display:none;">
+        <!-- EMAIL -->
+        <div class="row align-items-center mb-4">
+
+            <div class="col-3">
+                <span class="label-text">
+                    EMAIL
+                </span>
+            </div>
+
+            <div class="col-8">
+                <input type="email" id="emailInput" class="form-control" value="">
+            </div>
+
+            <div class="col-1">
+                <i class="bi bi-check-lg check-icon"></i>
+            </div>
+
+        </div>
+
+        <!-- PHONE -->
+        <div class="row align-items-center mb-4">
+
+            <div class="col-3">
+                <span class="label-text">
+                    PHONE
+                </span>
+            </div>
+
+            <div class="col-8">
+                <input id="phoneInput" type="text" class="form-control" value="">
+            </div>
+
+            <div class="col-1">
+                <i class="bi bi-check-lg check-icon"></i>
+            </div>
+
+        </div>
+
+        <!-- COURSE -->
+        <div class="row align-items-center mb-4">
+
+            <div class="col-3">
+                <span class="label-text">
+                    COURSE
+                </span>
+            </div>
+
+            <div class="col-8">
+                <input id="courseInput" type="text" class="form-control" value="">
+            </div>
+
+            <div class="col-1">
+                <i class="bi bi-pencil"></i>
+            </div>
+
+        </div>
+
+        <!-- PASSWORD -->
+        <div class="row align-items-center mb-4">
+
+            <div class="col-3">
+                <span class="label-text">
+                    PASSWORD
+                </span>
+            </div>
+
+            <div class="col-8">
+                <input id="passwordInput" type="password" class="form-control" value="">
+            </div>
+
+            <div class="col-1">
+                <i class="bi bi-check-lg check-icon"></i>
+            </div>
+
+        </div>
+
+        <!-- CONFIRM PASSWORD -->
+        <div class="row align-items-center mb-5">
+
+            <div class="col-3">
+                <span class="label-text">
+                    CONFIRM
+                </span>
+            </div>
+
+            <div class="col-8">
+                <input type="password" class="form-control">
+            </div>
+
+            <div class="col-1">
+                <i class="bi bi-check-lg check-icon"></i>
+            </div>
+
+        </div>
+
+        <!-- SAVE BUTTON -->
+        <div class="text-center">
+
+            <button id="saveBtn" class="btn save-btn text-white">
+                SAVE
+            </button>
+
+        </div>
+
+    </div>
+
+</div>
+
+<!-- REPORTS SECTION -->
+<div id="reportsSection" style="display:none;">
 
     <div class="mb-4">
 
@@ -246,143 +362,26 @@
 
 </div>
 
-                        <!-- RIGHT -->
-                        <div class="col-md-8">
+<!-- NOTIFICATIONS SECTION -->
+<div id="notificationsSection" style="display:none;">
 
-                            <!-- NAME -->
-                            <div class="row align-items-center mb-4">
+    <div class="mb-4">
 
-                                <div class="col-3">
-                                    <span class="label-text">
-                                        NAME
-                                    </span>
-                                </div>
-
-                                <div class="col-8">
-                                    <input type="text" class="form-control" id="nameInput" value="">
-                                </div>
-
-                                <div class="col-1">
-                                    <i class="bi bi-check-lg check-icon"></i>
-                                </div>
-
-                            </div>
-
-                            <!-- EMAIL -->
-                            <div class="row align-items-center mb-4">
-
-                                <div class="col-3">
-                                    <span class="label-text">
-                                        EMAIL
-                                    </span>
-                                </div>
-
-                                <div class="col-8">
-                                    <input type="email" id="emailInput" class="form-control" value="">
-                                </div>
-
-                                <div class="col-1">
-                                    <i class="bi bi-check-lg check-icon"></i>
-                                </div>
-
-                            </div>
-
-                            <!-- PHONE -->
-                            <div class="row align-items-center mb-4">
-
-                                <div class="col-3">
-                                    <span class="label-text">
-                                        PHONE
-                                    </span>
-                                </div>
-
-                                <div class="col-8">
-                                    <input id="phoneInput" type="text" class="form-control" value="">
-                                </div>
-
-                                <div class="col-1">
-                                    <i class="bi bi-check-lg check-icon"></i>
-                                </div>
-
-                            </div>
-
-                            <!-- COURSE -->
-                            <div class="row align-items-center mb-4">
-
-                                <div class="col-3">
-                                    <span class="label-text">
-                                        COURSE
-                                    </span>
-                                </div>
-
-                                <div class="col-8">
-                                    <input id="courseInput" type="text" class="form-control" value="">
-                                </div>
-
-                                <div class="col-1">
-                                    <i class="bi bi-pencil"></i>
-                                </div>
-
-                            </div>
-
-                            <!-- PASSWORD -->
-                            <div class="row align-items-center mb-4">
-
-                                <div class="col-3">
-                                    <span class="label-text">
-                                        PASSWORD
-                                    </span>
-                                </div>
-
-                                <div class="col-8">
-                                    <input id="passwordInput" type="password" class="form-control" value="">
-                                </div>
-
-                                <div class="col-1">
-                                    <i class="bi bi-check-lg check-icon"></i>
-                                </div>
-
-                            </div>
-
-                            <!-- CONFIRM PASSWORD -->
-                            <div class="row align-items-center mb-5">
-
-                                <div class="col-3">
-                                    <span class="label-text">
-                                        CONFIRM
-                                    </span>
-                                </div>
-
-                                <div class="col-8">
-                                    <input type="password" class="form-control">
-                                </div>
-
-                                <div class="col-1">
-                                    <i class="bi bi-check-lg check-icon"></i>
-                                </div>
-
-                            </div>
-
-                            <!-- SAVE BUTTON -->
-                            <div class="text-center">
-
-                                <button id="saveBtn" class="btn save-btn text-white">
-                                    SAVE
-                                </button>
-
-                            </div>
-
-                        </div>
-
-                    </div>
-
-                </div>
-
-            </div>
-
-        </div>
+        <h4 class="fw-bold">
+            Notifications
+        </h4>
 
     </div>
+
+    <div id="notificationsWrapper"></div>
+
+</div>
+
+
+
+
+
+
     <!-- FIREBASE SCRIPT -->
     <script type="module">
         
@@ -572,40 +571,46 @@
 // =====================================================
 // TAB SWITCHING
 // =====================================================
-
 const profileTab =
 document.getElementById("profileTab");
 
 const reportsTab =
 document.getElementById("reportsTab");
 
+const profileSection =
+document.getElementById("profileSection");
+
 const reportsSection =
 document.getElementById("reportsSection");
 
-const profileContent =
-document.querySelector(".col-md-8");
+const notificationsSection =
+document.getElementById("notificationsSection");
 
-reportsTab.addEventListener("click", () => {
-
-    reportsTab.classList.add("active");
-
-    profileTab.classList.remove("active");
-
-    reportsSection.style.display = "block";
-
-    profileContent.style.display = "none";
-
-});
-
+// SHOW PROFILE
 profileTab.addEventListener("click", () => {
 
     profileTab.classList.add("active");
-
     reportsTab.classList.remove("active");
+
+    profileSection.style.display = "block";
 
     reportsSection.style.display = "none";
 
-    profileContent.style.display = "block";
+    notificationsSection.style.display = "none";
+
+});
+
+// SHOW REPORTS + NOTIFICATIONS
+reportsTab.addEventListener("click", () => {
+
+    reportsTab.classList.add("active");
+    profileTab.classList.remove("active");
+
+    profileSection.style.display = "none";
+
+    reportsSection.style.display = "block";
+
+    notificationsSection.style.display = "block";
 
 });
 
@@ -750,9 +755,8 @@ onAuthStateChanged(auth, (user) => {
 
 });
 
-
         // =====================================================
-// REALTIME NOTIFICATIONS
+// SIMPLE REALTIME NOTIFICATIONS
 // =====================================================
 
 onAuthStateChanged(auth, (user) => {
@@ -777,10 +781,8 @@ onAuthStateChanged(auth, (user) => {
 
             notificationsWrapper.innerHTML = `
 
-                <div class="alert alert-info rounded-4">
-
+                <div class="text-muted">
                     No notifications yet.
-
                 </div>
 
             `;
@@ -796,30 +798,18 @@ onAuthStateChanged(auth, (user) => {
 
                 <div class="notification-card">
 
-                    <div class="d-flex justify-content-between">
+                    <p class="fw-semibold mb-1">
+                        ${notification.message}
+                    </p>
 
-                        <div>
-
-                            <p class="mb-1 fw-semibold">
-
-                                ${notification.message}
-
-                            </p>
-
-                            <small class="notification-time">
-
-                                Status:
-                                ${notification.status}
-
-                            </small>
-
-                        </div>
-
-                    </div>
+                    <small class="text-muted">
+                        ${notification.status}
+                    </small>
 
                 </div>
 
             `;
+
         });
 
     });
