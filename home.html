@@ -371,6 +371,13 @@
             }
         }
 
+                #notificationCount {
+
+            font-size: 10px;
+
+            padding: 5px 7px;
+            }
+
         /* LARGE DESKTOPS */
         @media (min-width: 1400px) {
 
@@ -454,9 +461,32 @@
                 </a>
 
                 <!-- Notification -->
-                <a href="#notificationsPanel" class="d-flex align-items-center">
-                    <img src="notification.png" alt="notifications" width="26" height="26" class="notification-icon">
-                </a>
+                        <div class="position-relative">
+
+    <!-- Notification Bell -->
+
+                    <img
+                        src="notification.png"
+                        alt="notifications"
+                        width="26"
+                        height="26"
+                        class="notification-icon"
+                        id="notificationBell"
+                        data-bs-toggle="offcanvas"
+                        data-bs-target="#notificationsPanel"
+                        style="cursor:pointer;">
+
+                    <!-- Notification Count -->
+
+                    <span
+                        id="notificationCount"
+                        class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
+
+                        0
+
+                    </span>
+
+                </div>
 
                 <!-- Profile -->
                 <div id="profileAvatar" class="profile-avatar" data-bs-toggle="offcanvas"
@@ -492,6 +522,36 @@
             <button class="btn btn-outline-danger w-100" id="logoutBtn">Logout</button>
         </div>
     </div>
+
+        <!-- NOTIFICATIONS PANEL -->
+
+            <div
+                class="offcanvas offcanvas-end"
+                tabindex="-1"
+                id="notificationsPanel">
+
+                <div class="offcanvas-header">
+
+                    <h5 class="offcanvas-title">
+                        Notifications
+                    </h5>
+
+                    <button
+                        type="button"
+                        class="btn-close"
+                        data-bs-dismiss="offcanvas">
+                    </button>
+
+                </div>
+
+                <div class="offcanvas-body">
+
+                    <div id="notificationsWrapper"></div>
+
+                </div>
+
+            </div>
+
 
     <!-- HERO -->
     <section class="hero">
@@ -807,8 +867,12 @@
             collection,
             query,
             where,
-            getDocs
-        } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
+            getDocs,
+            onSnapshot,
+            orderBy,
+            updateDoc
+        }
+            from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
 
         // YOUR FIREBASE CONFIG
         const firebaseConfig = {
@@ -834,6 +898,12 @@
         // INITIALIZE AUTH
         const auth = getAuth(app);
         const db = getFirestore(app);
+
+        const notificationsWrapper =
+            document.getElementById("notificationsWrapper");
+
+            const notificationCount =
+            document.getElementById("notificationCount");
         // CHECK LOGGED IN USER
         onAuthStateChanged(auth, async (user) => {
 
@@ -893,6 +963,110 @@
                 });
 
         });
+
+        // =====================================================
+// REALTIME NOTIFICATIONS
+// =====================================================
+
+onAuthStateChanged(auth, (user) => {
+
+    if (!user) return;
+
+    const notificationsQuery = query(
+
+        collection(db, "notifications"),
+
+        where("studentId", "==", user.uid),
+
+        orderBy("createdAt", "desc")
+
+    );
+
+    onSnapshot(notificationsQuery, (snapshot) => {
+
+        notificationsWrapper.innerHTML = "";
+
+        let unreadCount = 0;
+
+        if (snapshot.empty) {
+
+            notificationsWrapper.innerHTML = `
+
+                <div class="text-muted">
+
+                    No notifications yet.
+
+                </div>
+
+            `;
+
+            notificationCount.style.display = "none";
+
+            return;
+        }
+
+        snapshot.forEach((docSnap) => {
+
+            const notification = docSnap.data();
+
+            const notificationId = docSnap.id;
+
+            if (!notification.read) {
+
+                unreadCount++;
+
+            }
+
+            notificationsWrapper.innerHTML += `
+
+                <div class="card shadow-sm border-0 rounded-4 mb-3">
+
+                    <div class="card-body">
+
+                        <div class="d-flex justify-content-between">
+
+                            <div>
+
+                                <p class="mb-1 fw-semibold">
+
+                                    ${notification.message}
+
+                                </p>
+
+                                <small class="text-muted">
+
+                                    ${notification.status}
+
+                                </small>
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            `;
+        });
+
+        // UPDATE COUNT
+
+        if (unreadCount > 0) {
+
+            notificationCount.style.display = "inline-block";
+
+            notificationCount.textContent = unreadCount;
+
+        } else {
+
+            notificationCount.style.display = "none";
+
+        }
+
+    });
+
+});
 
     </script>
 
