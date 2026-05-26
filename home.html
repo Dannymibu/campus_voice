@@ -21,11 +21,12 @@
             background-image: url("consel.png");
             background-size: cover;
             background-repeat: no-repeat;
-            background-position: 0px 7%;
+            background-position: center;
             display: flex;
             align-items: center;
             color: white;
             overflow: hidden;
+            padding: 80px 0;
         }
 
         /* Blue overlay */
@@ -43,9 +44,25 @@
         }
 
         .hero h1 {
-            font-size: 3.5rem;
+            font-size: clamp(2.5rem, 6vw, 5.5rem);
             font-weight: 700;
+            line-height: 1;
         }
+
+        .hero p {
+            font-size: clamp(1rem, 1.5vw, 1.4rem);
+        }
+
+        .navbar-brand img {
+            width: clamp(24px, 2vw, 42px);
+        }
+
+        .navbar-brand span {
+            font-size: clamp(0.7rem, 1vw, 1rem);
+        }
+
+
+
 
         .btn-main {
             background-color: #2bbcd3;
@@ -61,11 +78,11 @@
         /* STUDENT IMAGE */
         .student-img {
             position: absolute;
-            bottom: -40px;
-            right: 8%;
+            bottom: 0;
+            right: 5%;
             z-index: 1;
-            max-height: 420px;
-
+            width: clamp(280px, 32vw, 650px);
+            height: auto;
         }
 
         /* CARDS */
@@ -229,6 +246,23 @@
 
         }
 
+        /* LARGE SCREENS */
+        @media (min-width: 1600px) {
+
+            .hero {
+                min-height: 100vh;
+            }
+
+            .hero-content {
+                max-width: 1000px;
+            }
+
+            .student-img {
+                right: 10%;
+            }
+        }
+
+
         /* MOBILE RESPONSIVENESS */
         @media (max-width: 768px) {
 
@@ -336,6 +370,62 @@
                 font-size: 1.8rem;
             }
         }
+
+        /* LARGE DESKTOPS */
+        @media (min-width: 1400px) {
+
+            /* make container wider */
+            .hero .container {
+                max-width: 1600px;
+                padding-left: 120px;
+                padding-right: 120px;
+            }
+
+            /* move text more left */
+            .hero-content .row {
+                justify-content: flex-start;
+            }
+
+            .hero-content .col-lg-6 {
+                margin-left: -80px;
+            }
+
+            /* bigger heading */
+            .hero h1 {
+                font-size: 10rem;
+                line-height: 0.8;
+
+            }
+
+            /* bigger paragraph */
+            .hero p {
+                font-size: 1.75rem;
+                max-width: 500px;
+            }
+
+            /* MUCH larger student image */
+            .student-img {
+                width: 840px;
+                max-width: none;
+                right: 3%;
+                bottom: -20px;
+            }
+
+            /* slightly larger button */
+            .btn-main {
+                padding: 12px 22px;
+                font-size: 1rem;
+            }
+
+            /* larger logo */
+            .navbar-brand img {
+                width: 90px;
+            }
+
+            .navbar-brand span {
+                font-size: 1rem;
+            }
+        }
     </style>
 </head>
 
@@ -348,7 +438,7 @@
 
             <!-- Logo -->
             <a class="navbar-brand text-center m-0" href="#">
-                <img src="w-megaphone.png" width="30" class="d-block mx-auto">
+                <img src="w-megaphone.png" class="d-block mx-auto">
 
                 <span class="fw-bold d-block small mt-1">
                     CAMPUS VOICE
@@ -408,7 +498,7 @@
         <div class="container hero-content">
             <div class="row ">
                 <div class="col-lg-6 text-center text-lg-start">
-                    <h1 class="fw-bold text-start mt-4 lh-1">
+                    <h1 class="fw-bold text-start mt-4">
                         <span class="d-block text-center text-lg-start">Your voice</span>
                         <span class="d-block text-center text-lg-start">Matters!</span>
                     </h1>
@@ -419,7 +509,7 @@
         </div>
 
         <!-- Student Image -->
-        <img style="margin-left: 50px;" src="smilling student.png" class="student-img" alt="student">
+        <img  src="smilling student.png" class="student-img" alt="student">
     </section>
 
     <!-- CARDS -->
