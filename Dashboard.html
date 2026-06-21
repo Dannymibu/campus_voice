@@ -396,57 +396,10 @@ Campus Voice - Admin Dashboard
     <script type="module">
 
 
-// =====================================================
-// TOAST FUNCTION
-// =====================================================
 
-function showToast(message, type = "success") {
-
-    const toastElement =
-        document.getElementById("liveToast");
-
-    const toastMessage =
-        document.getElementById("toastMessage");
-
-    toastMessage.textContent = message;
-
-    // RESET COLORS
-
-    toastElement.classList.remove(
-        "text-bg-success",
-        "text-bg-danger",
-        "text-bg-warning"
-    );
-
-    // APPLY TYPE
-
-    if (type === "success") {
-
-        toastElement.classList.add("text-bg-success");
-
-    }
-
-    if (type === "error") {
-
-        toastElement.classList.add("text-bg-danger");
-
-    }
-
-    if (type === "warning") {
-
-        toastElement.classList.add("text-bg-warning");
-
-    }
-
-    const toast =
-        new bootstrap.Toast(toastElement);
-
-    toast.show();
-
-}
 
         // =====================================================
-        // FIREBASE IMPORTS
+        // FIREBASE IMPORTS NEW
         // =====================================================
 
         import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
@@ -778,26 +731,26 @@ searchInput.addEventListener("input", () => {
                             }
 
                             await addDoc(
-                                collection(db, "notifications"),
-                                {
-                                    //studentId: studentId,
-                                   studentId: report.userUid,
-                                    message: message,
-                                    status: status,
-                                    read: false,
-                                    createdAt: serverTimestamp()
-                                }
-                            );
+                            collection(db, "notifications"),
+                            {
+                                studentId: studentId,
+                                reportId: reportId,
+                                message: message,
+                                status: status,
+                                read: false,
+                                createdAt: serverTimestamp()
+                            }
+                        );
 
-                            showToast(
-                                    "Report status updated successfully!"
-                                );
+                            console.log("Notification created successfully");
+
+                            alert("Report status updated successfully!");
 
                         } catch (error) {
 
                             console.log(error);
 
-                            showToast(error.message, "error");
+                            alert(error.message);
 
                         }
 

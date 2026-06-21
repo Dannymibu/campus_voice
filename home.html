@@ -378,61 +378,67 @@
             padding: 5px 7px;
             }
 
-        /* LARGE DESKTOPS */
-        @media (min-width: 1400px) {
 
-            /* make container wider */
-            .hero .container {
-                max-width: 1600px;
-                padding-left: 120px;
-                padding-right: 120px;
-            }
+ 
 
-            /* move text more left */
-            .hero-content .row {
-                justify-content: flex-start;
-            }
 
-            .hero-content .col-lg-6 {
-                margin-left: -80px;
-            }
+/* LARGE DESKTOPS */
+@media (min-width: 1400px) {
 
-            /* bigger heading */
-            .hero h1 {
-                font-size: 10rem;
-                line-height: 0.8;
+    .hero .container {
+        max-width: 1600px;
+        padding-left: 120px;
+        padding-right: 120px;
+    }
 
-            }
+    .hero-content .row {
+        justify-content: flex-start;
+    }
 
-            /* bigger paragraph */
-            .hero p {
-                font-size: 1.75rem;
-                max-width: 500px;
-            }
+    .hero-content .col-lg-6 {
+        margin-left: -80px;
+    }
 
-            /* MUCH larger student image */
-            .student-img {
-                width: 840px;
-                max-width: none;
-                right: 3%;
-                bottom: -20px;
-            }
+    .hero h1 {
+        font-size: 10rem;
+        line-height: 0.8;
+    }
 
-            /* slightly larger button */
-            .btn-main {
-                padding: 12px 22px;
-                font-size: 1rem;
-            }
+    .hero p {
+        font-size: 1.75rem;
+        max-width: 500px;
+    }
 
-            /* larger logo */
-            .navbar-brand img {
-                width: 90px;
-            }
+    .student-img {
+        width: 840px;
+        max-width: none;
+        right: 3%;
+        bottom: -20px;
+    }
 
-            .navbar-brand span {
-                font-size: 1rem;
-            }
-        }
+    .btn-main {
+        padding: 12px 22px;
+        font-size: 1rem;
+    }
+
+    .navbar-brand img {
+        width: 90px;
+    }
+
+    .navbar-brand span {
+        font-size: 1rem;
+    }
+}
+
+.notification-read {
+    opacity: 0.6;
+}
+
+
+
+
+
+
     </style>
 </head>
 
@@ -905,6 +911,11 @@
 
             const notificationCount =
             document.getElementById("notificationCount");
+
+
+            const notificationBell =
+                document.getElementById("notificationBell");
+
         // CHECK LOGGED IN USER
         onAuthStateChanged(auth, async (user) => {
 
@@ -975,13 +986,11 @@ onAuthStateChanged(auth, (user) => {
 
     const notificationsQuery = query(
 
-        collection(db, "notifications"),
+    collection(db, "notifications"),
 
-        where("studentId", "==", user.uid),
+    where("studentId", "==", user.uid)
 
-        orderBy("createdAt", "desc")
-
-    );
+);
 
     onSnapshot(notificationsQuery, (snapshot) => {
 
@@ -1020,7 +1029,14 @@ onAuthStateChanged(auth, (user) => {
 
             notificationsWrapper.innerHTML += `
 
-                <div class="card shadow-sm border-0 rounded-4 mb-3">
+                <div class="
+                    card
+                    shadow-sm
+                    border-0
+                    rounded-4
+                    mb-3
+                    ${notification.read ? 'notification-read' : ''}
+                ">
 
                     <div class="card-body">
 
@@ -1055,19 +1071,35 @@ onAuthStateChanged(auth, (user) => {
 
         if (unreadCount > 0) {
 
-            notificationCount.style.display = "inline-block";
+    notificationCount.style.display =
+        "inline-block";
 
-            notificationCount.textContent = unreadCount;
+    notificationCount.textContent =
+        unreadCount;
 
-        } else {
+    // START BELL SHAKE
 
-            notificationCount.style.display = "none";
 
-        }
+} else {
+
+    notificationCount.style.display =
+        "none";
+
+    // STOP BELL SHAKE
+
+ 
+
+}
 
     });
 
 });
+
+        // =====================================================
+// MARK NOTIFICATIONS AS READ
+// =====================================================
+
+
 
     </script>
 
