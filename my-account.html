@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Account Settings</title>
+    <title> my Account</title>
 
     <!-- Bootstrap -->
     <link href="css/bootstrap.min.css" rel="stylesheet">
@@ -384,7 +384,7 @@
 
     <!-- FIREBASE SCRIPT -->
     <script type="module">
-        
+
 
         import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
 
@@ -445,10 +445,10 @@
 
         const notificationsWrapper =
             document.getElementById("notificationsWrapper");
-        
+
         //we are now adding the updated code
 
-          
+
         const storage = getStorage(app);
 
 
@@ -493,7 +493,7 @@
                         nameParts[0].charAt(0) +
                         (nameParts[1] ? nameParts[1].charAt(0) : "");
 
-                    
+
                 }
 
             } else {
@@ -507,7 +507,7 @@
 
         // SAVE PROFILE CHANGES
         document.getElementById("saveBtn").addEventListener("click", async () => {
-         
+
             const user = auth.currentUser;
 
             if (!user) return;
