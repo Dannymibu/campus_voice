@@ -291,22 +291,21 @@
 
                 const user = userCredential.user;
 
-                await setDoc(doc(db, "users", student_id), {
+                await setDoc(doc(db, "students", student_id), {
 
-                    uid: user.uid,
+                uid: user.uid,
 
-                    full_name: full_name,
+                full_name: full_name,
 
-                    school_id: student_id,
+                student_id: student_id,
 
-                    email: email,
+                email: email,
 
-                    role:"student",
+                role: "student",
 
-                    createdAt: new Date()
+                createdAt: new Date()
 
-                });
-
+            });
                 alert("Account created successfully!");
 
                 window.location.href = "login.html";

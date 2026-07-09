@@ -586,6 +586,15 @@ Campus Voice - Submit Concern Page
 
             e.preventDefault();
 
+            // Make sure user information has loaded
+    if (!currentUser || !studentData) {
+
+        alert("User details are still loading. Please wait a moment and try again.");
+
+        return;
+
+    }
+
             try {
 
                 document.getElementById("submitText")
@@ -637,7 +646,7 @@ Campus Voice - Submit Concern Page
 
                 await addDoc(collection(db, "reports"), {
 
-                    studentId: user.uid,
+                    studentId: currentUser.uid,
 
                     studentName:
                         studentData.full_name || "",
