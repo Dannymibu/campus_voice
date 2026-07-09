@@ -199,7 +199,11 @@ from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
 import {
     getFirestore,
     doc,
-    getDoc
+    getDoc,
+    collection,
+    query,
+    where,
+    getDocs
 }
 from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
 
@@ -242,37 +246,29 @@ document.getElementById("loginForm")
         // CHECK ADMINS COLLECTION FIRST
         // =====================================
 
-        const adminRef =
-            doc(db, "admins", school_id);
+       const adminQuery = query(
+    collection(db, "admins"),
+    where("admin_id", "==", school_id)
+);
 
-        const adminSnap =
-            await getDoc(adminRef);
+const adminSnapshot = await getDocs(adminQuery);
 
-        // =====================================
-        // ADMIN FOUND
-        // =====================================
+if (!adminSnapshot.empty) {
 
-        if(adminSnap.exists()){
+    const adminData =
+        adminSnapshot.docs[0].data();
 
-            const adminData =
-                adminSnap.data();
+    await signInWithEmailAndPassword(
+        auth,
+        adminData.email,
+        password
+    );
 
-            await signInWithEmailAndPassword(
+    window.location.href =
+        "Dashboard.html";
 
-                auth,
-
-                adminData.email,
-
-                password
-
-            );
-
-            window.location.href =
-                "Dashboard.html";
-
-            return;
-        }
-
+    return;
+}
         // =====================================
         // CHECK STUDENTS COLLECTION NEW
         // =====================================
